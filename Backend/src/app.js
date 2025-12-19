@@ -1,9 +1,7 @@
 import express from "express";
-import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import compression from "compression";
-import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import authRoutes from "./modules/auth/authRoutes.js";
@@ -35,16 +33,8 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
-// Standard Middlewares
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    credentials: true,
-  })
-);
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-app.use(cookieParser());
 app.use(compression());
 
 // Routes

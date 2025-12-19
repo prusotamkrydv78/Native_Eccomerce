@@ -36,13 +36,21 @@ export const register = asyncHandler(async (req, res) => {
     await Cart.create({ user: user._id, items: [] });
     await Wishlist.create({ user: user._id, products: [] });
 
+    const accessToken = generateAccessToken({ id: user._id });
+    const refreshToken = generateRefreshToken({ id: user._id });
+
+    // Save refresh token in DB
+    user.refreshToken = refreshToken;
+    await user.save();
+
     res.status(201).json({
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
       role: user.role,
-      accessToken: generateAccessToken({ id: user._id }),
+      accessToken,
+      refreshToken,
     });
   } else {
     res.status(400);
@@ -71,14 +79,6 @@ export const login = asyncHandler(async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    // Set refresh token in cookie
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
-
     res.json({
       _id: user._id,
       firstName: user.firstName,
@@ -86,6 +86,7 @@ export const login = asyncHandler(async (req, res) => {
       email: user.email,
       role: user.role,
       accessToken,
+      refreshToken,
     });
   } else {
     res.status(401);
@@ -95,15 +96,15 @@ export const login = asyncHandler(async (req, res) => {
 
 // @desc    Refresh access token
 // @route   POST /api/auth/refresh
-// @access  Public (uses cookie)
+// @access  Public
 export const refresh = asyncHandler(async (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies?.jwt) {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
     res.status(401);
-    throw new Error("Unauthorized");
+    throw new Error("Refresh token is required");
   }
 
-  const refreshToken = cookies.jwt;
   const user = await User.findOne({ refreshToken });
 
   if (!user) {
@@ -129,10 +130,13 @@ export const refresh = asyncHandler(async (req, res) => {
 // @route   POST /api/auth/logout
 // @access  Private
 export const logout = asyncHandler(async (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204);
+  const { refreshToken } = req.body;
 
-  const refreshToken = cookies.jwt;
+  if (!refreshToken) {
+    res.status(400);
+    throw new Error("Refresh token is required for logout");
+  }
+
   const user = await User.findOne({ refreshToken });
 
   if (user) {
@@ -140,11 +144,6 @@ export const logout = asyncHandler(async (req, res) => {
     await user.save();
   }
 
-  res.clearCookie("jwt", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-  });
   res.status(200).json({ message: "Logged out successfully" });
 });
 
