@@ -46,7 +46,7 @@ const router = express.Router();
  *                 type: string
  *               role:
  *                 type: string
- *                 enum: [Customer, Seller]
+ *                 enum: [User, Admin]
  *     responses:
  *       201:
  *         description: User registered successfully

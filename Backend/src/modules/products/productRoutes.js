@@ -89,7 +89,7 @@ router.get("/", getProducts);
  *       201:
  *         description: Product created successfully
  */
-router.post("/", protect, authorize("Admin", "Seller"), createProduct);
+router.post("/", protect, authorize("Admin"), createProduct);
 
 /**
  * @swagger
@@ -129,7 +129,7 @@ router.get("/:id", getProductById);
  *       200:
  *         description: Product updated
  */
-router.put("/:id", protect, authorize("Admin", "Seller"), updateProduct);
+router.put("/:id", protect, authorize("Admin"), updateProduct);
 
 /**
  * @swagger
@@ -149,7 +149,7 @@ router.put("/:id", protect, authorize("Admin", "Seller"), updateProduct);
  *       200:
  *         description: Product removed
  */
-router.delete("/:id", protect, authorize("Admin", "Seller"), deleteProduct);
+router.delete("/:id", protect, authorize("Admin"), deleteProduct);
 
 /**
  * @swagger

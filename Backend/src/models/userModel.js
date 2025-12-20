@@ -31,8 +31,8 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     role: {
       type: String,
-      enum: ["Customer", "Seller", "Admin"],
-      default: "Customer",
+      enum: ["User", "Admin"],
+      default: "User",
     },
     addresses: [addressSchema],
     isVerified: { type: Boolean, default: false },

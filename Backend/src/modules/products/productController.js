@@ -63,7 +63,7 @@ export const getProductById = asyncHandler(async (req, res) => {
 
 // @desc    Create a product
 // @route   POST /api/products
-// @access  Private/Admin or Seller
+// @access  Private/Admin
 export const createProduct = asyncHandler(async (req, res) => {
   const {
     name,
@@ -96,7 +96,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 
 // @desc    Update a product
 // @route   PUT /api/products/:id
-// @access  Private/Admin or Seller
+// @access  Private/Admin
 export const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
@@ -112,14 +112,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
-    // Check ownership if Seller
-    if (
-      req.user.role === "Seller" &&
-      product.seller.toString() !== req.user._id.toString()
-    ) {
-      res.status(403);
-      throw new Error("Not authorized to update this product");
-    }
+    // Only Admin can update (handled by middleware, but good to keep clean)
 
     product.name = name || product.name;
     product.basePrice = basePrice || product.basePrice;
@@ -150,13 +143,8 @@ export const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
-    if (
-      req.user.role === "Seller" &&
-      product.seller.toString() !== req.user._id.toString()
-    ) {
-      res.status(403);
-      throw new Error("Not authorized to delete this product");
-    }
+    // Only Admin can delete (handled by middleware)
+
     await product.deleteOne();
     res.json({ message: "Product removed" });
   } else {

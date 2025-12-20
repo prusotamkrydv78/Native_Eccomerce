@@ -28,7 +28,7 @@ export const register = asyncHandler(async (req, res) => {
     lastName,
     email,
     password,
-    role: role || "Customer",
+    role: role || "User",
   });
 
   if (user) {
