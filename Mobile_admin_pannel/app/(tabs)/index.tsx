@@ -20,7 +20,7 @@ const HomeScreen = () => {
             <Text className="text-slate-400 text-xs  uppercase tracking-widest">
               Internal Control
             </Text>
-            <Text className="text-neutral-800 text-2xl font-bold">
+            <Text className="text-slate-700 text-2xl font-semibold">
               Management
             </Text>
           </View>
@@ -54,10 +54,10 @@ const HomeScreen = () => {
               >
                 <View className="flex-row justify-between items-start">
                   <View>
-                    <Text className="text-white/70 text-xs font-bold uppercase tracking-[2px]">
+                    <Text className="text-white/70 text-xs font-semibold uppercase tracking-[2px]">
                       Portfolio Value
                     </Text>
-                    <Text className="text-white text-4xl font-bold tracking-tighter">
+                    <Text className="text-white text-4xl font-semibold tracking-tighter">
                       $12,450.00
                     </Text>
                   </View>
@@ -66,12 +66,12 @@ const HomeScreen = () => {
                 <View className="mt-8 flex-row items-center justify-between">
                   <View className="flex-row items-center bg-white/10 px-4 py-2 rounded-2xl">
                     <Ionicons name="trending-up" size={16} color="green" />
-                    <Text className="text-white text-xs font-bold ml-2">
+                    <Text className="text-white text-xs font-semibold ml-2">
                       +12.5% increase
                     </Text>
                   </View>
                   <TouchableOpacity className="flex-row items-center">
-                    <Text className="text-white text-xs font-bold mr-1">
+                    <Text className="text-white text-xs font-semibold mr-1">
                       ANALYSIS
                     </Text>
                     <Ionicons name="chevron-forward" size={14} color="white" />
@@ -86,7 +86,7 @@ const HomeScreen = () => {
             <View className="mt-12 px-6">
               <View className="flex-row justify-between items-center mb-8">
                 <View>
-                  <Text className="text-neutral-900 text-xl font-bold tracking-tight">
+                  <Text className="text-slate-800 text-xl font-semibold tracking-tight">
                     Live Inventory
                   </Text>
                   <View className="flex-row items-center mt-1">
@@ -97,7 +97,7 @@ const HomeScreen = () => {
                   </View>
                 </View>
                 <TouchableOpacity className="py-2 px-4 bg-slate-50 rounded-2xl">
-                  <Text className="text-[#F83758] text-xs font-bold uppercase tracking-wider">
+                  <Text className="text-[#F83758] text-xs font-semibold uppercase tracking-wider">
                     Manage
                   </Text>
                 </TouchableOpacity>
@@ -109,10 +109,12 @@ const HomeScreen = () => {
                   <View className="h-14 w-14 bg-white rounded-3xl items-center justify-center mb-4">
                     <Ionicons name="flash" size={24} color="#3b82f6" />
                   </View>
-                  <Text className="text-blue-900/40 text-[9px] font-bold uppercase tracking-[2px] mb-1">
+                  <Text className="text-blue-900/40 text-[9px] font-semibold uppercase tracking-[2px] mb-1">
                     Sales
                   </Text>
-                  <Text className="text-blue-900 text-2xl font-bold">145</Text>
+                  <Text className="text-blue-900 text-2xl font-semibold">
+                    145
+                  </Text>
                 </View>
 
                 {/* Pending Tile */}
@@ -120,10 +122,12 @@ const HomeScreen = () => {
                   <View className="h-14 w-14 bg-white rounded-3xl items-center justify-center mb-4">
                     <Ionicons name="time" size={24} color="#f59e0b" />
                   </View>
-                  <Text className="text-amber-900/40 text-[9px] font-bold uppercase tracking-[2px] mb-1">
+                  <Text className="text-amber-900/40 text-[9px] font-semibold uppercase tracking-[2px] mb-1">
                     Pending
                   </Text>
-                  <Text className="text-amber-900 text-2xl font-bold">12</Text>
+                  <Text className="text-amber-900 text-2xl font-semibold">
+                    12
+                  </Text>
                 </View>
 
                 {/* Stock Tile */}
@@ -131,10 +135,10 @@ const HomeScreen = () => {
                   <View className="h-14 w-14 bg-white rounded-3xl items-center justify-center mb-4">
                     <Ionicons name="cube" size={24} color="#10b981" />
                   </View>
-                  <Text className="text-emerald-900/40 text-[9px] font-bold uppercase tracking-[2px] mb-1">
+                  <Text className="text-emerald-900/40 text-[9px] font-semibold uppercase tracking-[2px] mb-1">
                     Products
                   </Text>
-                  <Text className="text-emerald-900 text-2xl font-bold">
+                  <Text className="text-emerald-900 text-2xl font-semibold">
                     482
                   </Text>
                 </View>
@@ -144,7 +148,7 @@ const HomeScreen = () => {
             {/* QUICK ACTIONS - RADIANT TILES */}
             <View className="px-6 mt-16 pb-2">
               <View className="flex-row items-center mb-8">
-                <Text className="text-neutral-900 text-xl font-bold tracking-tight">
+                <Text className="text-slate-800 text-xl font-semibold tracking-tight">
                   Quick Actions
                 </Text>
                 <View className="ml-4 h-[1px] flex-1 bg-slate-100" />
@@ -187,7 +191,7 @@ const HomeScreen = () => {
                         color={item.color}
                       />
                     </TouchableOpacity>
-                    <Text className="text-slate-500 text-[10px] font-bold uppercase tracking-wider text-center">
+                    <Text className="text-slate-500 text-[10px] font-semibold uppercase tracking-wider text-center">
                       {item.label}
                     </Text>
                   </View>
@@ -198,7 +202,7 @@ const HomeScreen = () => {
             {/* RECENT ACTIVITY - REFINED & SMOOTH */}
             <View className="px-6 mt-12">
               <View className="flex-row justify-between items-center mb-8">
-                <Text className="text-neutral-800 text-lg font-bold">
+                <Text className="text-slate-700 text-lg font-semibold">
                   Recent Activity
                 </Text>
                 <TouchableOpacity>
@@ -244,13 +248,13 @@ const HomeScreen = () => {
                   >
                     <Text
                       style={{ color: order.color }}
-                      className="font-bold text-base"
+                      className="font-semibold text-base"
                     >
                       {order.name[0]}
                     </Text>
                   </View>
                   <View className="ml-4 flex-1">
-                    <Text className="text-neutral-800 font-medium text-base">
+                    <Text className="text-slate-700 font-medium text-base">
                       {order.name}
                     </Text>
                     <Text className="text-slate-400 text-xs mt-0.5">
@@ -258,14 +262,14 @@ const HomeScreen = () => {
                     </Text>
                   </View>
                   <View className="items-end">
-                    <Text className="text-neutral-800 font-bold text-base">
+                    <Text className="text-slate-700 font-semibold text-base">
                       {order.amount}
                     </Text>
                     <Text
                       style={{
                         color: order.status === "Done" ? "#10b981" : "#f59e0b",
                       }}
-                      className="text-[10px] font-bold uppercase tracking-wider mt-1"
+                      className="text-[10px] font-semibold uppercase tracking-wider mt-1"
                     >
                       {order.status}
                     </Text>

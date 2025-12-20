@@ -7,20 +7,24 @@ export default function RootLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "#F83758",
-        tabBarInactiveTintColor: "#64748b",
+        tabBarInactiveTintColor: "#94a3b8",
         tabBarStyle: {
           borderTopWidth: 0,
           elevation: 0,
-          height: 70,
-          paddingBottom: 15,
-          paddingTop: 10,
+          height: 85,
+          paddingBottom: 25,
+          paddingTop: 12,
           backgroundColor: "#ffffff",
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: -4 },
+          shadowOpacity: 0.03,
+          shadowRadius: 10,
         },
         tabBarLabelStyle: {
           fontSize: 10,
-          fontWeight: "900",
-          textTransform: "uppercase",
-          letterSpacing: 1,
+          fontWeight: "700",
+          textTransform: "capitalize",
+          marginTop: 4,
         },
         headerShown: false,
       }}
@@ -29,24 +33,24 @@ export default function RootLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "home" : "home-outline"}
+              name={focused ? "grid" : "grid-outline"}
               color={color}
-              size={24}
+              size={22}
             />
           ),
         }}
       />
       <Tabs.Screen
-        name="products"
+        name="users"
         options={{
-          title: "Inventory",
-          tabBarIcon: ({ color, size, focused }) => (
+          title: "Users",
+          tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "cube" : "cube-outline"}
+              name={focused ? "people" : "people-outline"}
               color={color}
-              size={24}
+              size={22}
             />
           ),
         }}
@@ -55,11 +59,24 @@ export default function RootLayout() {
         name="orders"
         options={{
           title: "Orders",
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "receipt" : "receipt-outline"}
               color={color}
-              size={24}
+              size={22}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="products"
+        options={{
+          title: "Inventory",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "cube" : "cube-outline"}
+              color={color}
+              size={22}
             />
           ),
         }}
@@ -67,12 +84,12 @@ export default function RootLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Admin",
-          tabBarIcon: ({ color, size, focused }) => (
+          title: "Settings",
+          tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "person" : "person-outline"}
+              name={focused ? "settings" : "settings-outline"}
               color={color}
-              size={24}
+              size={22}
             />
           ),
         }}
