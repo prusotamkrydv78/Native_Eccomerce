@@ -1,6 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { login } from "../../api/auth.api";
+import { tokenStorage } from "../../utils/tokenStorage";
 import {
   Text,
   TextInput,
@@ -9,6 +11,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 
 const Login = () => {
@@ -17,11 +21,45 @@ const Login = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = () => {
-    // In a real app, you'd validate credentials here
-    router.replace("/");
+  const handleLogin = async () => {
+    if (!adminData.email || !adminData.password) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await login(adminData);
+      const data = await res;
+
+      if (data.firstName) {
+        // Store tokens
+        const { accessToken, refreshToken, role } = data;
+        // Ensure user is admin
+        if (role !== "Admin") {
+          Alert.alert("Unauthorized", "Only admins can access this panel");
+          return;
+        }
+
+        await tokenStorage.setTokens(accessToken, refreshToken);
+
+        // Navigate to dashboard
+        router.replace("/(tabs)");
+      } else {
+        Alert.alert("Login Failed", data.message || "Invalid credentials");
+      }
+    } catch (error: any) {
+      console.error("Login Error:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred during login. Please check your connection.";
+      Alert.alert("Error", errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -112,9 +150,13 @@ const Login = () => {
             className="bg-[#F83758] w-full py-5 rounded-[28px] mt-12 shadow-xl shadow-[#F83758]/30 items-center"
             onPress={handleLogin}
           >
-            <Text className="text-white text-lg font-semibold">
-              Sign In to Dashboard
-            </Text>
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text className="text-white text-lg font-semibold">
+                Sign In to Dashboard
+              </Text>
+            )}
           </TouchableOpacity>
 
           {/* Support Link */}
