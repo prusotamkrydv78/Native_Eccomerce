@@ -1,5 +1,4 @@
 import { Tabs } from "expo-router";
-import "../global.css";
 import { Ionicons } from "@expo/vector-icons";
 import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
 
@@ -45,18 +44,19 @@ export default function RootLayout() {
           }}
         />
         <Tabs.Screen
-          name="users"
+          name="products"
           options={{
-            title: "Users",
+            title: "Inventory",
             tabBarIcon: ({ color, focused }) => (
               <Ionicons
-                name={focused ? "people" : "people-outline"}
+                name={focused ? "cube" : "cube-outline"}
                 color={color}
                 size={22}
               />
             ),
           }}
         />
+
         <Tabs.Screen
           name="orders"
           options={{
@@ -71,18 +71,19 @@ export default function RootLayout() {
           }}
         />
         <Tabs.Screen
-          name="products"
+          name="users"
           options={{
-            title: "Inventory",
+            title: "Users",
             tabBarIcon: ({ color, focused }) => (
               <Ionicons
-                name={focused ? "cube" : "cube-outline"}
+                name={focused ? "person" : "person-outline"}
                 color={color}
                 size={22}
               />
             ),
           }}
         />
+
         <Tabs.Screen
           name="profile"
           options={{

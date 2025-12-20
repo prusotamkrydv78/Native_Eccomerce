@@ -1,13 +1,9 @@
 import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  StatusBar,
-} from "react-native";
+import { ScrollView, TouchableOpacity, View, StatusBar } from "react-native";
 
 const HomeScreen = () => {
   return (

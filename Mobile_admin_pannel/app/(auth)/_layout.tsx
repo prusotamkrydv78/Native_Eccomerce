@@ -1,5 +1,4 @@
-import { Stack, useRouter } from "expo-router";
-import "../global.css";
+import { Stack, useRouter } from "expo-router"; 
 import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
 import { useEffect, useState } from "react";
 import { tokenStorage } from "@/utils/tokenStorage";
