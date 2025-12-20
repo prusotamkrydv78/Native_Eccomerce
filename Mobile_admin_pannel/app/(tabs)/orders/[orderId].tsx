@@ -211,7 +211,9 @@ export default function OrderDetailScreen() {
               <Text className="text-slate-400 font-semibold">Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity className="flex-[1.5] bg-[#F83758] py-4 rounded-2xl items-center justify-center">
-              <Text className="text-white font-semibold">Mark Shipped</Text>
+              <Text className="text-surface-light font-semibold">
+                Mark Shipped
+              </Text>
             </TouchableOpacity>
           </View>
 

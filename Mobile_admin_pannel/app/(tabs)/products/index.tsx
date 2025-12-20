@@ -142,7 +142,9 @@ export default function ProductsScreen() {
                 >
                   <Text
                     className={`font-semibold text-xs ${
-                      activeCategory === cat ? "text-white" : "text-slate-500"
+                      activeCategory === cat
+                        ? "text-surface-light"
+                        : "text-slate-500"
                     }`}
                   >
                     {cat}
@@ -200,7 +202,7 @@ export default function ProductsScreen() {
                     />
                     {product.tag && (
                       <View className="absolute top-2 left-2 bg-[#F83758] px-2 py-1 rounded-lg">
-                        <Text className="text-[10px] font-semibold text-white">
+                        <Text className="text-[10px] font-semibold text-surface-light">
                           {product.tag}
                         </Text>
                       </View>

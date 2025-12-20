@@ -132,7 +132,9 @@ export default function OrdersScreen() {
                 >
                   <Text
                     className={`font-semibold text-xs ${
-                      activeFilter === filter ? "text-white" : "text-slate-500"
+                      activeFilter === filter
+                        ? "text-surface-light"
+                        : "text-slate-500"
                     }`}
                   >
                     {filter}
@@ -200,7 +202,7 @@ export default function OrdersScreen() {
                   </TouchableOpacity>
                   {order.hasTrack && (
                     <TouchableOpacity className="flex-1 bg-[#F83758] py-4 rounded-2xl items-center justify-center">
-                      <Text className="text-white font-semibold text-xs">
+                      <Text className="text-surface-light font-semibold text-xs">
                         Track
                       </Text>
                     </TouchableOpacity>

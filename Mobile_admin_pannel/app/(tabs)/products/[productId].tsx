@@ -194,7 +194,7 @@ export default function ProductDetailScreen() {
             className="w-full bg-[#F83758] py-5 rounded-[24px] flex-row items-center justify-center"
           >
             <Ionicons name="settings-outline" size={20} color="white" />
-            <Text className="text-white font-semibold ml-3 text-base">
+            <Text className="text-surface-light font-semibold ml-3 text-base">
               Modify Product
             </Text>
           </TouchableOpacity>

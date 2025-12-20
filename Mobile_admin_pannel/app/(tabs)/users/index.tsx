@@ -137,7 +137,9 @@ export default function UserListScreen() {
                 >
                   <Text
                     className={`font-semibold text-xs ${
-                      activeFilter === filter ? "text-white" : "text-slate-500"
+                      activeFilter === filter
+                        ? "text-surface-light"
+                        : "text-slate-500"
                     }`}
                   >
                     {filter}

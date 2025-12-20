@@ -9,7 +9,10 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
         }}
-      />
+      >
+        <Stack.Screen name="startup" options={{ title: "Startup" }} />
+        <Stack.Screen name="login" options={{ title: "Login" }} />
+      </Stack>
     </SafeAreaContextWrapper>
   );
 }

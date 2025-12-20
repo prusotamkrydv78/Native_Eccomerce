@@ -54,10 +54,10 @@ const HomeScreen = () => {
               >
                 <View className="flex-row justify-between items-start">
                   <View>
-                    <Text className="text-white/70 text-xs font-semibold uppercase tracking-[2px]">
+                    <Text className="text-surface-light/70 text-xs font-semibold uppercase tracking-[2px]">
                       Portfolio Value
                     </Text>
-                    <Text className="text-white text-4xl font-semibold tracking-tighter">
+                    <Text className="text-surface-light text-4xl font-semibold tracking-tighter">
                       $12,450.00
                     </Text>
                   </View>
@@ -66,12 +66,12 @@ const HomeScreen = () => {
                 <View className="mt-8 flex-row items-center justify-between">
                   <View className="flex-row items-center bg-white/10 px-4 py-2 rounded-2xl">
                     <Ionicons name="trending-up" size={16} color="green" />
-                    <Text className="text-white text-xs font-semibold ml-2">
+                    <Text className="text-surface-light text-xs font-semibold ml-2">
                       +12.5% increase
                     </Text>
                   </View>
                   <TouchableOpacity className="flex-row items-center">
-                    <Text className="text-white text-xs font-semibold mr-1">
+                    <Text className="text-surface-light text-xs font-semibold mr-1">
                       ANALYSIS
                     </Text>
                     <Ionicons name="chevron-forward" size={14} color="white" />

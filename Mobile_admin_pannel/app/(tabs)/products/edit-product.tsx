@@ -163,7 +163,9 @@ export default function EditProductScreen() {
               color="white"
               className="mr-2"
             />
-            <Text className="text-white font-semibold ml-2">Save Changes</Text>
+            <Text className="text-surface-light font-semibold ml-2">
+              Save Changes
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
