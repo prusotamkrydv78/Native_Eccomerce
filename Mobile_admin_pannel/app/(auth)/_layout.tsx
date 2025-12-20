@@ -1,11 +1,15 @@
 import { Stack } from "expo-router";
-import "../global.css"
+import "../global.css";
+import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
 
 export default function RootLayout() {
-    return <Stack
+  return (
+    <SafeAreaContextWrapper>
+      <Stack
         screenOptions={{
-            headerShown: false
+          headerShown: false,
         }}
-
-    />;
+      />
+    </SafeAreaContextWrapper>
+  );
 }

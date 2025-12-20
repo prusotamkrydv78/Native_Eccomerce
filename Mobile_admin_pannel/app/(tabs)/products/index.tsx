@@ -1,9 +1,10 @@
+import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
 import { Text, View } from "react-native";
 const ProductScreen = () => {
   return (
-    <View className="flex-1 items-center justify-center">
+    <SafeAreaContextWrapper>
       <Text>Products</Text>
-    </View>
+    </SafeAreaContextWrapper>
   );
 };
 export default ProductScreen;

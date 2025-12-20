@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 const Login = () => {
   const [adminData, setAdminData] = useState({
@@ -14,13 +14,14 @@ const Login = () => {
     //   adminData.password === "test"
     // ) {
     //   Alert.alert("Login Success");
-    router.push("/(tabs)/index");
+    router.push("/");
     // } else {
     //   Alert.alert("Invalid credentials");
     //   adminData.email = "";
     //   adminData.password = "";
     // }
   };
+
   return (
     <View className="flex-1 justify-center gap-3 px-8">
       <Text className="text-6xl font-bold text-center">
