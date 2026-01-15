@@ -6,7 +6,7 @@ import { ActivityIndicator, View } from "react-native";
 
 export default function RootLayout() {
   const router = useRouter();
-  const [loading, setLoading] = useState<null | boolean>(true);
+  const [loading, setLoading] = useState<null | boolean>(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -25,7 +25,7 @@ export default function RootLayout() {
         setLoading(false);
       }
     };
-    checkAuth();
+    // checkAuth();
   }, []);
 
   return (

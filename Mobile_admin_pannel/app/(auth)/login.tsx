@@ -25,28 +25,25 @@ const Login = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
-    if (!adminData.email || !adminData.password) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
+    // if (!adminData.email || !adminData.password) {
+    //   Alert.alert("Error", "Please fill in all fields");
+    //   return;
+    // }
     setLoading(true);
     try {
+      console.log(adminData);
       const res = await login(adminData);
       const data = await res;
-
       if (data.firstName) {
-        // Store tokens
+        //     // Store tokens
         const { accessToken, refreshToken, role } = data;
-        // Ensure user is admin
+        //     // Ensure user is admin
         if (role !== "Admin") {
           Alert.alert("Unauthorized", "Only admins can access this panel");
           return;
         }
-
         await tokenStorage.setTokens(accessToken, refreshToken);
 
-        // Navigate to dashboard
         router.replace("/(tabs)");
       } else {
         Alert.alert("Login Failed", data.message || "Invalid credentials");
@@ -76,26 +73,26 @@ const Login = () => {
         }}
       >
         {/* HEADER */}
-        <View className="pt-20 pb-16">
+        <View className="pt-10 pb-10 justify-center items-center">
           <View className="h-16 w-16 bg-[#F83758] rounded-[24px] items-center justify-center mb-10 shadow-lg shadow-[#F83758]/40">
             <Ionicons name="key" size={32} color="white" />
           </View>
-          <Text className="text-slate-800 text-4xl font-semibold leading-[48px]">
+          <Text className="text-slate-800 text-4xl font-semibold  text-center">
             Welcome Back,{"\n"}Admin
           </Text>
-          <Text className="text-slate-400 text-base mt-2 font-medium">
+          <Text className="text-slate-400 text-base    font-medium">
             Sign in to manage your store
           </Text>
         </View>
 
         {/* FORM AREA */}
-        <View className="space-y-5">
+        <View className="space-y-2">
           {/* Email Field */}
           <View>
-            <Text className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-3 ml-2">
+            <Text className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-1 ml-2">
               Email Address
             </Text>
-            <View className="flex-row items-center bg-slate-50 rounded-[28px] px-6 py-5">
+            <View className="flex-row items-center bg-slate-100 rounded-md px-4 py-2">
               <Ionicons name="mail-outline" size={20} color="#94a3b8" />
               <TextInput
                 className="flex-1 ml-4 text-slate-700 font-medium"
@@ -112,11 +109,11 @@ const Login = () => {
           </View>
 
           {/* Password Field */}
-          <View className="mt-6">
+          <View className="mt-3">
             <Text className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-3 ml-2">
               Password
             </Text>
-            <View className="flex-row items-center bg-slate-50 rounded-[28px] px-6 py-5">
+            <View className="flex-row items-center bg-slate-100 rounded-md px-4 py-2">
               <Ionicons name="lock-closed-outline" size={20} color="#94a3b8" />
               <TextInput
                 className="flex-1 ml-4 text-slate-700 font-medium"
@@ -138,7 +135,7 @@ const Login = () => {
             </View>
           </View>
 
-          <TouchableOpacity className="items-end mt-4 px-2">
+          <TouchableOpacity className="items-end mt-2 px-2">
             <Text className="text-[#F83758] font-semibold text-sm">
               Forgot Password?
             </Text>
@@ -147,7 +144,7 @@ const Login = () => {
           {/* Login Button */}
           <TouchableOpacity
             activeOpacity={0.8}
-            className="bg-[#F83758] w-full py-5 rounded-[28px] mt-12 shadow-xl shadow-[#F83758]/30 items-center"
+            className="bg-[#F83758] w-full py-4 rounded-md mt-5 shadow-xl shadow-[#F83758]/30 items-center"
             onPress={handleLogin}
           >
             {loading ? (
@@ -160,11 +157,19 @@ const Login = () => {
           </TouchableOpacity>
 
           {/* Support Link */}
-          <View className="mt-10 items-center">
+          <View className="mt-5 items-center">
             <Text className="text-slate-400 font-medium text-sm">
               New staff member?{" "}
-              <Text className="text-[#F83758] font-semibold">
+              <Text className="text-[#F83758] font-semibold underline">
                 Contact Support
+              </Text>
+            </Text>
+          </View>
+          <View className="mt-20 items-center justify-center">
+            <Text className="text-slate-400 font-medium text-sm text-center">
+              Build by, <Ionicons name="heart" size={20} color={"#F83758"} />{" "}
+              <Text className="text-[#F83758] font-semibold text-center">
+                Prusotam
               </Text>
             </Text>
           </View>
