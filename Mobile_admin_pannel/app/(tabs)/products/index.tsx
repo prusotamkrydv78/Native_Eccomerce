@@ -90,9 +90,9 @@ export default function ProductsScreen() {
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
         {/* HEADER */}
-        <View className="px-6 pt-4 pb-2 flex-row justify-between items-center bg-white">
+        <View className="px-4 pt-2 pb-2 flex-row justify-between items-center bg-white">
           <View className="flex-row items-center">
-            <TouchableOpacity className="mr-4 h-10 w-10 items-center justify-center rounded-xl bg-slate-50">
+            <TouchableOpacity className="mr-2 h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
               <Ionicons name="menu-outline" size={24} color="#171717" />
             </TouchableOpacity>
             <Text className="text-slate-700 text-xl font-semibold">
@@ -107,12 +107,12 @@ export default function ProductsScreen() {
         </View>
 
         {/* SEARCH BAR - BORDERLESS */}
-        <View className="px-6 py-4 bg-white">
-          <View className="flex-row items-center bg-slate-50 rounded-2xl px-4 py-3">
+        <View className="px-4 my-2 bg-white">
+          <View className="flex-row items-center bg-slate-100 rounded-xl px-4 py-2">
             <Ionicons name="search-outline" size={20} color="#94a3b8" />
             <TextInput
               placeholder="Search products..."
-              className="flex-1 ml-3 text-slate-700 font-medium"
+              className="flex-1 ml-2 text-slate-800 font-medium"
               placeholderTextColor="#94a3b8"
             />
             <TouchableOpacity>
@@ -123,21 +123,21 @@ export default function ProductsScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
+          contentContainerStyle={{ paddingBottom: 30 }}
         >
           {/* CATEGORY CHIPS */}
-          <View className="py-6">
+          <View className="py-2">
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 24 }}
+              contentContainerStyle={{ paddingHorizontal: 10 }}
             >
               {CATEGORIES.map((cat) => (
                 <TouchableOpacity
                   key={cat}
                   onPress={() => setActiveCategory(cat)}
-                  className={`mr-3 px-6 py-3 rounded-2xl ${
-                    activeCategory === cat ? "bg-[#F83758]" : "bg-slate-50"
+                  className={`ml-2 px-3 py-2 rounded-xl ${
+                    activeCategory === cat ? "bg-[#F83758]" : "bg-slate-100"
                   }`}
                 >
                   <Text
@@ -155,17 +155,15 @@ export default function ProductsScreen() {
           </View>
 
           {/* LIST HEADER INFO */}
-          <View className="px-6 flex-row justify-between items-center mb-6">
+          <View className="px-4 flex-row justify-between items-center mb-2">
             <View className="flex-row items-baseline">
-              <Text className="text-slate-700 text-xl font-semibold">
-                52,082+
-              </Text>
+              <Text className="text-slate-700 text-xl font-semibold">20</Text>
               <Text className="text-slate-400 text-xs font-semibold ml-2">
                 Items
               </Text>
             </View>
             <View className="flex-row">
-              <TouchableOpacity className="flex-row items-center bg-slate-50 px-4 py-2 rounded-xl mr-2">
+              <TouchableOpacity className="flex-row items-center bg-slate-100 px-4 py-2 rounded-xl mr-2">
                 <Text className="text-slate-600 text-xs font-semibold mr-2">
                   Sort
                 </Text>
@@ -175,7 +173,7 @@ export default function ProductsScreen() {
                   color="#64748b"
                 />
               </TouchableOpacity>
-              <TouchableOpacity className="flex-row items-center bg-slate-50 px-4 py-2 rounded-xl">
+              <TouchableOpacity className="flex-row items-center bg-slate-100 px-4 py-2 rounded-xl">
                 <Text className="text-slate-600 text-xs font-semibold mr-2">
                   Filter
                 </Text>
@@ -185,23 +183,23 @@ export default function ProductsScreen() {
           </View>
 
           {/* PRODUCTS LIST - CLEAN BORDERLESS TILES */}
-          <View className="px-6">
+          <View className="px-2">
             {PRODUCTS_DATA.map((product) => (
               <TouchableOpacity
                 key={product.id}
                 onPress={() => router.push(`/products/${product.id}`)}
-                className="bg-white rounded-[40px] p-2 mb-6"
+                className="bg-white rounded-xl mb-3"
               >
-                <View className="flex-row items-center">
+                <View className="flex-row">
                   {/* Image Container */}
-                  <View className="h-28 w-28 bg-slate-50 rounded-[32px] items-center justify-center">
+                  <View className="h-28 w-28 bg-slate-50 rounded-xl items-center justify-center">
                     <Image
                       source={{ uri: product.image }}
-                      className="h-24 w-24 rounded-[24px]"
+                      className="h-24 w-24 rounded-xl"
                       resizeMode="cover"
                     />
                     {product.tag && (
-                      <View className="absolute top-2 left-2 bg-[#F83758] px-2 py-1 rounded-lg">
+                      <View className="absolute -top-0 left-1 bg-[#F83758] px-2 py-1 rounded-xl">
                         <Text className="text-[10px] font-semibold text-surface-light">
                           {product.tag}
                         </Text>
@@ -210,7 +208,7 @@ export default function ProductsScreen() {
                   </View>
 
                   {/* Details Container */}
-                  <View className="flex-1 ml-4 pr-4">
+                  <View className="flex-1 ml-2 pr-2 mt-2 ">
                     <View className="flex-row justify-between items-start">
                       <View className="flex-1">
                         <Text
@@ -225,7 +223,7 @@ export default function ProductsScreen() {
                       </View>
                       <View
                         style={{ backgroundColor: product.statusBg }}
-                        className="px-2 py-1 rounded-lg"
+                        className="px-2 py-1 rounded-xl"
                       >
                         <Text
                           style={{ color: product.statusColor }}
@@ -236,7 +234,7 @@ export default function ProductsScreen() {
                       </View>
                     </View>
 
-                    <View className="flex-row justify-between items-center mt-4">
+                    <View className="flex-row justify-between items-center mt-1">
                       <View className="flex-row items-center">
                         <Text className="text-[#F83758] text-lg font-semibold">
                           {product.price}
@@ -263,7 +261,7 @@ export default function ProductsScreen() {
 
         {/* FLOATING ACTION BUTTON - FLAT & CLEAN */}
         <TouchableOpacity
-          className="absolute bottom-10 right-8 h-16 w-16 bg-[#F83758] rounded-full items-center justify-center"
+          className="absolute bottom-2 right-4 h-16 w-16 bg-[#F83758] rounded-full items-center justify-center"
           onPress={() => router.push(`/products/add-product`)}
         >
           <Ionicons name="add" size={32} color="white" />

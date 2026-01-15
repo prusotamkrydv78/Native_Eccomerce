@@ -77,25 +77,25 @@ export default function UserListScreen() {
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
         {/* HEADER */}
-        <View className="px-6 py-8 flex-row justify-between items-start">
+        <View className="px-4 py-2 flex-row justify-between items-start">
           <View>
             <Text className="text-slate-900 text-3xl font-semibold">
               User List
             </Text>
-            <Text className="text-slate-400 text-sm mt-1 font-medium">
+            <Text className="text-slate-400 text-sm font-medium">
               Manage your team members
             </Text>
           </View>
           <View className="flex-row items-center">
-            <TouchableOpacity className="h-12 w-12 bg-slate-50 rounded-2xl items-center justify-center mr-3 relative">
+            <TouchableOpacity className="h-12 w-12 mr-2 bg-slate-100 rounded-xl items-center justify-center">
               <Ionicons
                 name="notifications-outline"
-                size={22}
+                size={20}
                 color="#171717"
               />
-              <View className="absolute top-3 right-3 h-2 w-2 bg-black rounded-full border border-white" />
+              <View className="absolute top-3 right-3 h-2 w-2 bg-[#F83758] rounded-full " />
             </TouchableOpacity>
-            <TouchableOpacity className="h-12 w-12 bg-[#F83758] rounded-2xl items-center justify-center shadow-lg shadow-[#F83758]/30">
+            <TouchableOpacity className="h-12 w-12 bg-[#F83758] rounded-xl items-center justify-center shadow-lg shadow-[#F83758]/30">
               <Ionicons name="add" size={28} color="white" />
             </TouchableOpacity>
           </View>
@@ -103,15 +103,15 @@ export default function UserListScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40 }}
+          contentContainerStyle={{ paddingBottom: 30 }}
         >
           {/* SEARCH BAR */}
-          <View className="px-6 mb-8">
-            <View className="flex-row items-center bg-slate-50 rounded-[24px] px-6 py-4">
+          <View className="px-4 mb-2">
+            <View className="flex-row items-center bg-slate-100 rounded-xl px-4 py-2">
               <Ionicons name="search-outline" size={20} color="#94a3b8" />
               <TextInput
                 placeholder="Search any user..."
-                className="flex-1 ml-4 text-slate-700 font-medium"
+                className="flex-1 ml-3 text-slate-700 font-medium"
                 placeholderTextColor="#94a3b8"
               />
               <TouchableOpacity>
@@ -121,18 +121,18 @@ export default function UserListScreen() {
           </View>
 
           {/* FILTERS */}
-          <View className="mb-10">
+          <View className="mb-4">
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 24 }}
+              contentContainerStyle={{ paddingHorizontal: 14 }}
             >
               {FILTER_OPTIONS.map((filter) => (
                 <TouchableOpacity
                   key={filter}
                   onPress={() => setActiveFilter(filter)}
-                  className={`mr-3 px-8 py-3.5 rounded-[20px] ${
-                    activeFilter === filter ? "bg-[#F83758]" : "bg-slate-50"
+                  className={`mr-2 px-4 py-3.5 rounded-xl ${
+                    activeFilter === filter ? "bg-[#F83758]" : "bg-slate-100"
                   }`}
                 >
                   <Text
@@ -150,24 +150,24 @@ export default function UserListScreen() {
           </View>
 
           {/* USERS LIST */}
-          <View className="px-6">
+          <View className="px-4">
             {USERS_DATA.map((user) => (
               <TouchableOpacity
                 key={user.id}
                 onPress={() => router.push(`/users/${user.id}`)}
-                className="bg-slate-50/50 rounded-[32px] p-5 mb-5 flex-row items-center"
+                className="bg-slate-100 rounded-xl p-4 px-2 mb-2 flex-row items-center"
               >
                 <View className="relative">
                   <Image
                     source={{ uri: user.avatar }}
-                    className="h-16 w-16 rounded-[24px] bg-slate-50"
+                    className="h-16 w-16 rounded-xl bg-slate-200"
                   />
                   <View
-                    className={`absolute bottom-0 right-0 h-4 w-4 rounded-full border-2 border-white ${user.status === "active" ? "bg-emerald-500" : "bg-red-500"}`}
+                    className={`absolute -bottom-1  -right-1 h-4 w-4 rounded-full border-2 border-white ${user.status === "active" ? "bg-emerald-500" : "bg-red-500"}`}
                   />
                 </View>
 
-                <View className="flex-1 ml-4">
+                <View className="flex-1 ml-2">
                   <View className="flex-row items-center">
                     <Text className="text-slate-900 font-semibold text-lg mr-2">
                       {user.name}
@@ -175,7 +175,7 @@ export default function UserListScreen() {
                     {user.role && (
                       <View
                         style={{ backgroundColor: user.roleBg }}
-                        className="px-2 py-0.5 rounded-lg"
+                        className="px-2 py-0.5 rounded-xl"
                       >
                         <Text
                           style={{ color: user.roleColor }}
@@ -186,7 +186,7 @@ export default function UserListScreen() {
                       </View>
                     )}
                   </View>
-                  <Text className="text-slate-400 text-xs mt-1 font-medium">
+                  <Text className="text-slate-400 text-xs font-medium">
                     {user.email}
                   </Text>
                 </View>
