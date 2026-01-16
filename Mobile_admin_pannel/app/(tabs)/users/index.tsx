@@ -199,16 +199,14 @@ export default function UserListScreen() {
                 <TouchableOpacity
                   key={filter}
                   onPress={() => filterUsers(filter)}
-                  className={`mr-2 px-4 py-3.5 rounded-xl ${
-                    activeFilter === filter ? "bg-[#F83758]" : "bg-slate-100"
-                  }`}
+                  className={`mr-2 px-4 py-3.5 rounded-xl ${activeFilter === filter ? "bg-[#F83758]" : "bg-slate-100"
+                    }`}
                 >
                   <Text
-                    className={`font-semibold text-xs ${
-                      activeFilter === filter
+                    className={`font-semibold text-xs ${activeFilter === filter
                         ? "text-surface-light"
                         : "text-slate-500"
-                    }`}
+                      }`}
                   >
                     {filter}
                   </Text>
