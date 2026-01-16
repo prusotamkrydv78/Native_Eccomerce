@@ -2,43 +2,16 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  View,
-  Dimensions,
-  ActivityIndicator,
-  StatusBar,
+  View, 
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
-import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
-import { tokenStorage } from "@/utils/tokenStorage";
-
-const { width, height } = Dimensions.get("window");
-
+import { Ionicons } from "@expo/vector-icons"; 
 export default function StartUp() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter(); 
   const handleNavigate = () => {
     router.push("/(auth)/login");
-  };
-  useEffect(() => {
-    redirectToHome();
-  }, []);
-
-  const redirectToHome = async () => {
-    setIsLoading(true);
-    const isUserLogin =
-      (await tokenStorage.getAccessToken()) ||
-      (await tokenStorage.getRefreshToken());
-    if (isUserLogin) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      router.replace("/(tabs)");
-    }
-  };
+  }; 
 
   return (
     <View className="flex-1 bg-white">

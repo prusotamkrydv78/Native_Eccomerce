@@ -1,5 +1,5 @@
 import axios from "axios";
-import { tokenStorage } from "../utils/tokenStorage";
+import { useAuthStore } from "../store/authStore";
 import ENV from "@/utils/ENV";
 
 console.log("API Base URL:", ENV.API_BASE_URL);
@@ -14,9 +14,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    const accessToken = await tokenStorage.getAccessToken();
-    if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    const tokens = useAuthStore.getState().tokens;
+    if (tokens?.accessToken) {
+      config.headers["Authorization"] = `Bearer ${tokens.accessToken}`;
     }
     return config;
   },
@@ -36,20 +36,25 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const refreshToken = await tokenStorage.getRefreshToken();
-        if (refreshToken) {
+        const tokens = useAuthStore.getState().tokens;
+        if (tokens?.refreshToken) {
           const response = await axios.post(
-            `${process.env.EXPO_PUBLIC_API_URL}/auth/refresh`,
-            { refreshToken }
+            `${ENV.API_BASE_URL}/auth/refresh`,
+            { refreshToken: tokens.refreshToken }
           );
           const { accessToken, refreshToken: newRefreshToken } = response.data;
-          await tokenStorage.setTokens(accessToken, newRefreshToken);
+
+          const user = useAuthStore.getState().user;
+          await useAuthStore.getState().setAuth(user, {
+            accessToken,
+            refreshToken: newRefreshToken,
+          });
+
           originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
           return api(originalRequest);
         }
       } catch (refreshError) {
-        await tokenStorage.clear();
-        // Handle refresh token failure (e.g., redirect to login)
+        await useAuthStore.getState().logout();
       }
     }
     return Promise.reject(error);

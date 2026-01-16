@@ -6,15 +6,25 @@ import {
   TouchableOpacity,
   Image,
   Switch,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
-
+import { useAuthStore } from "@/store/authStore";
 export default function SettingsScreen() {
+  const [isLogouting, setIsLogouting] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isNotifications, setIsNotifications] = useState(true);
-
+  const { logout } = useAuthStore();
+  const handleLogOut = () => {
+    setIsLogouting(true);
+    logout();
+    setTimeout(() => {
+      router.replace("/(auth)/startup");
+      setIsLogouting(false);
+    }, 1000);
+  };
   return (
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
@@ -128,12 +138,20 @@ export default function SettingsScreen() {
           <View className="px-4">
             <TouchableOpacity
               className="flex-row items-center justify-center bg-rose-100 py-3 rounded-xl"
-              onPress={() => router.replace("/(auth)/startup")}
+              onPress={handleLogOut}
             >
-              <Ionicons name="log-out-outline" size={22} color="#F83758" />
-              <Text className="text-[#F83758] font-semibold ml-2 text-base">
-                Log Out
-              </Text>
+              {!isLogouting ? (
+                <>
+                  <Ionicons name="log-out-outline" size={22} color="#F83758" />
+                  <Text className="text-[#F83758] font-semibold ml-2 text-base">
+                    Log Out
+                  </Text>
+                </>
+              ) : (
+                <View className="flex-1 items-center justify-center">
+                  <ActivityIndicator size="large" color="#F83758" />
+                </View>
+              )}
             </TouchableOpacity>
           </View>
         </ScrollView>

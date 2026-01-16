@@ -1,8 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { useState } from "react";
-import { login } from "../../api/auth.api";
-import { tokenStorage } from "../../utils/tokenStorage";
 import {
   Text,
   TextInput,
@@ -14,49 +11,19 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
+import { useLogin } from "@/hooks/queryHooks/useAuth.hooks";
 
 const Login = () => {
   const [adminData, setAdminData] = useState({
-    email: "",
-    password: "",
+    email: "admin@example.com",
+    password: "password123",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const { mutate: login, isPending: loading, isError, error } = useLogin();
 
-  const handleLogin = async () => {
-    // if (!adminData.email || !adminData.password) {
-    //   Alert.alert("Error", "Please fill in all fields");
-    //   return;
-    // }
-    setLoading(true);
-    try {
-      console.log(adminData);
-      const res = await login(adminData);
-      const data = await res;
-      if (data.firstName) {
-        //     // Store tokens
-        const { accessToken, refreshToken, role } = data;
-        //     // Ensure user is admin
-        if (role !== "Admin") {
-          Alert.alert("Unauthorized", "Only admins can access this panel");
-          return;
-        }
-        await tokenStorage.setTokens(accessToken, refreshToken);
-
-        router.replace("/(tabs)");
-      } else {
-        Alert.alert("Login Failed", data.message || "Invalid credentials");
-      }
-    } catch (error: any) {
-      console.error("Login Error:", error);
-      const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred during login. Please check your connection.";
-      Alert.alert("Error", errorMessage);
-    } finally {
-      setLoading(false);
-    }
+  const handleLogin = () => {
+    if (isError) Alert.alert("Error, Plz try again");
+    login({ email: adminData.email, password: adminData.password });
   };
 
   return (
