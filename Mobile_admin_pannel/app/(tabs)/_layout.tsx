@@ -97,6 +97,13 @@ export default function RootLayout() {
             ),
           }}
         />
+
+        <Tabs.Screen
+          name="(stack)"
+          options={{
+            href: null,
+          }}
+        />
       </Tabs>
     </SafeAreaContextWrapper>
   );

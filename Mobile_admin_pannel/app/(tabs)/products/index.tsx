@@ -257,7 +257,12 @@ export default function ProductsScreen() {
             {filteredProducts.map((product: Product) => (
               <TouchableOpacity
                 key={product.id}
-                onPress={() => router.push(`/products/${product.id}`)}
+                onPress={() =>
+                  router.push({
+                    pathname: "/products/[productId]",
+                    params: { productId: product.id },
+                  })
+                }
                 className="bg-white rounded-xl mb-3"
               >
                 <View className="flex-row">

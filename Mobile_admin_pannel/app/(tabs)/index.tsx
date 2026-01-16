@@ -12,26 +12,35 @@ const HomeScreen = () => {
       <StatusBar barStyle="dark-content" />
       <View className="flex-1 bg-white">
         {/* HEADER SECTION - REFINED & BORDERLESS */}
-        <View className="px-4 pt-2 pb-2 flex-row justify-between items-center bg-white">
-          <View>
-            <Text className="text-slate-400 text-xs  uppercase tracking-widest">
+        <View className="px-4 pt-3 pb-3 flex-row justify-between items-center bg-white">
+          <View className="flex-1">
+            <Text className="text-slate-400 text-[11px] uppercase tracking-[2px]">
               Internal Control
             </Text>
-            <Text className="text-slate-700 text-2xl font-semibold">
+            <Text className="text-slate-900 text-2xl font-semibold">
               Management
             </Text>
+            <Text className="text-slate-400 text-xs font-medium mt-1">
+              Overview of today’s activity
+            </Text>
           </View>
-          <View className="flex-row gap-1 ">
-            <TouchableOpacity className="h-10 w-10 bg-slate-100 rounded-xl items-center justify-center">
+          <View className="flex-row items-center">
+            <TouchableOpacity
+              onPress={() => router.push("/(stack)/help")}
+              className="h-11 w-11 bg-slate-100 rounded-xl items-center justify-center mr-2"
+            >
               <Ionicons name="search-outline" size={20} color="#171717" />
             </TouchableOpacity>
-            <TouchableOpacity className="h-10 w-10 bg-slate-100 rounded-xl items-center justify-center">
+            <TouchableOpacity
+              onPress={() => router.push("/(stack)/notifications")}
+              className="h-11 w-11 bg-slate-100 rounded-xl items-center justify-center"
+            >
               <Ionicons
                 name="notifications-outline"
                 size={20}
                 color="#171717"
               />
-              <View className="absolute top-3 right-3 h-2 w-2 bg-[#F83758] rounded-full " />
+              <View className="absolute top-3.5 right-3.5 h-2 w-2 bg-[#F83758] rounded-full " />
             </TouchableOpacity>
           </View>
         </View>
@@ -45,18 +54,24 @@ const HomeScreen = () => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={{
-                  borderRadius: 20,
+                  borderRadius: 24,
                   padding: 20,
                 }}
               >
                 <View className="flex-row justify-between items-start">
                   <View>
-                    <Text className="text-surface-light/70 text-xs font-semibold uppercase tracking-[2px]">
+                    <Text className="text-surface-light/80 text-xs font-semibold uppercase tracking-[2px]">
                       Portfolio Value
                     </Text>
-                    <Text className="text-surface-light text-4xl font-semibold tracking-tighter">
+                    <Text className="text-surface-light text-4xl font-semibold tracking-tighter mt-1">
                       $00.00
                     </Text>
+                    <Text className="text-surface-light/80 text-xs font-medium mt-1">
+                      Updated just now
+                    </Text>
+                  </View>
+                  <View className="bg-white/15 h-12 w-12 rounded-2xl items-center justify-center">
+                    <Ionicons name="stats-chart" size={22} color="white" />
                   </View>
                 </View>
 
@@ -67,11 +82,14 @@ const HomeScreen = () => {
                       +12.5% increase
                     </Text>
                   </View>
-                  <TouchableOpacity className="flex-row items-center">
+                  <TouchableOpacity
+                    onPress={() => router.push("/(stack)/analysis")}
+                    className="flex-row items-center bg-white/15 px-4 py-2 rounded-xl"
+                  >
                     <Text className="text-surface-light text-xs font-semibold mr-1">
                       ANALYSIS
                     </Text>
-                    <Ionicons name="chevron-forward" size={16} color="black" />
+                    <Ionicons name="chevron-forward" size={16} color="white" />
                   </TouchableOpacity>
                 </View>
               </LinearGradient>
@@ -105,8 +123,8 @@ const HomeScreen = () => {
 
               <View className="flex-row justify-between mt-4">
                 {/* Sale Tile */}
-                <View className="w-[31%] bg-blue-100/40 p-4 justify-center rounded-xl items-center">
-                  <View className="h-14 w-14 bg-white rounded-3xl items-center justify-center mb-4">
+                <View className="w-[31%] bg-blue-100/40 p-4 justify-center rounded-2xl items-center">
+                  <View className="h-14 w-14 bg-white rounded-2xl items-center justify-center mb-4">
                     <Ionicons name="flash" size={24} color="#3b82f6" />
                   </View>
                   <Text className="text-blue-900/40 text-[9px] font-semibold uppercase tracking-[2px]">
@@ -118,8 +136,8 @@ const HomeScreen = () => {
                 </View>
 
                 {/* Pending Tile */}
-                <View className="w-[31%] bg-yellow-100/40 p-4 justify-center  rounded-xl items-center">
-                  <View className="h-14 w-14 bg-white rounded-3xl items-center justify-center mb-4">
+                <View className="w-[31%] bg-yellow-100/40 p-4 justify-center  rounded-2xl items-center">
+                  <View className="h-14 w-14 bg-white rounded-2xl items-center justify-center mb-4">
                     <Ionicons name="time" size={24} color="#f59e0b" />
                   </View>
                   <Text className="text-amber-900/40 text-[9px] font-semibold uppercase tracking-[2px]">
@@ -131,8 +149,8 @@ const HomeScreen = () => {
                 </View>
 
                 {/* Stock Tile */}
-                <View className="w-[31%] bg-emerald-100/40 p-4 justify-center  rounded-xl items-center">
-                  <View className="h-14 w-14 bg-white rounded-3xl items-center justify-center mb-4">
+                <View className="w-[31%] bg-emerald-100/40 p-4 justify-center  rounded-2xl items-center">
+                  <View className="h-14 w-14 bg-white rounded-2xl items-center justify-center mb-4">
                     <Ionicons name="cube" size={24} color="#10b981" />
                   </View>
                   <Text className="text-emerald-900/40 text-[9px] font-semibold uppercase tracking-[2px]">
@@ -182,7 +200,7 @@ const HomeScreen = () => {
                     icon: "help-circle",
                     color: "#64748b",
                     bg: "#F8FAFC",
-                    screen: "/(tabs)/products/add-product",
+                    screen: "/(stack)/help",
                   },
                 ].map((item, idx) => (
                   <View
@@ -192,7 +210,7 @@ const HomeScreen = () => {
                     <TouchableOpacity
                       onPress={() => router.push(item.screen as any)}
                       style={{ backgroundColor: item.bg }}
-                      className="h-16 w-16 rounded-xl items-center justify-center mb-2"
+                      className="h-16 w-16 rounded-2xl items-center justify-center mb-2"
                     >
                       <Ionicons
                         name={item.icon as any}
@@ -221,70 +239,86 @@ const HomeScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              {[
-                {
-                  name: "Sarah Johnson",
-                  id: "0021",
-                  amount: "+ $149",
-                  status: "Done",
-                  time: "2 min ago",
-                  color: "#10b981",
-                  bg: "#ECFDF5",
-                },
-                {
-                  name: "Mike Chen",
-                  id: "0020",
-                  amount: "+ $82",
-                  status: "Pending",
-                  time: "1 hour ago",
-                  color: "#f59e0b",
-                  bg: "#FFFBEB",
-                },
-                {
-                  name: "Elena Rodriguez",
-                  id: "0019",
-                  amount: "+ $210",
-                  status: "Done",
-                  time: "3 hours ago",
-                  color: "#10b981",
-                  bg: "#ECFDF5",
-                },
-              ].map((order, idx) => (
-                <View key={idx} className="flex-row items-center">
+              <View className="bg-slate-50 rounded-2xl p-3">
+                {[
+                  {
+                    name: "Sarah Johnson",
+                    id: "0021",
+                    amount: "+ $149",
+                    status: "Done",
+                    time: "2 min ago",
+                    color: "#10b981",
+                    bg: "#ECFDF5",
+                  },
+                  {
+                    name: "Mike Chen",
+                    id: "0020",
+                    amount: "+ $82",
+                    status: "Pending",
+                    time: "1 hour ago",
+                    color: "#f59e0b",
+                    bg: "#FFFBEB",
+                  },
+                  {
+                    name: "Elena Rodriguez",
+                    id: "0019",
+                    amount: "+ $210",
+                    status: "Done",
+                    time: "3 hours ago",
+                    color: "#10b981",
+                    bg: "#ECFDF5",
+                  },
+                ].map((order, idx) => (
                   <View
-                    style={{ backgroundColor: order.bg }}
-                    className="h-12 w-12 rounded-xl items-center justify-center"
+                    key={idx}
+                    className={`flex-row items-center ${idx === 0 ? "" : "mt-3"}`}
                   >
-                    <Text
-                      style={{ color: order.color }}
-                      className="font-semibold text-base"
+                    <View
+                      style={{ backgroundColor: order.bg }}
+                      className="h-12 w-12 rounded-xl items-center justify-center"
                     >
-                      {order.name[0]}
-                    </Text>
+                      <Text
+                        style={{ color: order.color }}
+                        className="font-semibold text-base"
+                      >
+                        {order.name[0]}
+                      </Text>
+                    </View>
+                    <View className="ml-4 flex-1">
+                      <Text className="text-slate-700 font-medium text-base">
+                        {order.name}
+                      </Text>
+                      <Text className="text-slate-400 text-xs mt-0.5">
+                        Order #{order.id} • {order.time}
+                      </Text>
+                    </View>
+                    <View className="items-end">
+                      <Text className="text-slate-700 font-semibold text-base">
+                        {order.amount}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor:
+                            order.status === "Done" ? "#ECFDF5" : "#FFFBEB",
+                        }}
+                        className="px-2 py-1 rounded-xl mt-1"
+                      >
+                        <Text
+                          style={{
+                            color:
+                              order.status === "Done"
+                                ? "#10b981"
+                                : "#f59e0b",
+                          }}
+                          className="text-[10px] font-semibold uppercase tracking-wider"
+                        >
+                          {order.status}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
-                  <View className="ml-4 flex-1">
-                    <Text className="text-slate-700 font-medium text-base">
-                      {order.name}
-                    </Text>
-                    <Text className="text-slate-400 text-xs mt-0.5">
-                      Order #{order.id} • {order.time}
-                    </Text>
-                  </View>
-                  <View className="items-end">
-                    <Text className="text-slate-700 font-semibold text-base">
-                      {order.amount}
-                    </Text>
-                    <Text
-                      style={{
-                        color: order.status === "Done" ? "#10b981" : "#f59e0b",
-                      }}
-                      className="text-[10px] font-semibold uppercase tracking-wider mt-1"
-                    >
-                      {order.status}
-                    </Text>
-                  </View>
-                </View>
-              ))}
+                ))}
+              </View>
             </View>
           </View>
         </ScrollView>

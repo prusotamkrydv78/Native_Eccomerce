@@ -262,7 +262,12 @@ export default function OrdersScreen() {
                 {/* Actions */}
                 <View className="flex-row gap-3">
                   <TouchableOpacity
-                    onPress={() => router.push(`/orders/${order.id}`)}
+                    onPress={() =>
+                      router.push({
+                        pathname: "/orders/[orderId]",
+                        params: { orderId: order.id },
+                      })
+                    }
                     className={`flex-1 py-2 rounded-xl items-center justify-center ${
                       order.hasTrack ? "bg-slate-100" : "bg-slate-100 w-full"
                     }`}
@@ -272,7 +277,15 @@ export default function OrdersScreen() {
                     </Text>
                   </TouchableOpacity>
                   {order.hasTrack && (
-                    <TouchableOpacity className="flex-1 bg-[#F83758] py-4 rounded-xl items-center justify-center">
+                    <TouchableOpacity
+                      onPress={() =>
+                        router.push({
+                          pathname: "/(stack)/orders/track",
+                          params: { orderId: order.id },
+                        })
+                      }
+                      className="flex-1 bg-[#F83758] py-4 rounded-xl items-center justify-center"
+                    >
                       <Text className="text-surface-light font-semibold">
                         Track
                       </Text>

@@ -220,7 +220,12 @@ export default function UserListScreen() {
             {filteredUsers.map((user: User) => (
               <TouchableOpacity
                 key={user.id}
-                onPress={() => router.push(`/users/${user.id}`)}
+                onPress={() =>
+                  router.push({
+                    pathname: "/users/[userId]",
+                    params: { userId: user.id },
+                  })
+                }
                 className="bg-slate-100 rounded-xl p-4 px-2 mb-2 flex-row items-center"
               >
                 <View className="relative">
@@ -257,7 +262,12 @@ export default function UserListScreen() {
                   </Text>
                 </View>
 
-                <TouchableOpacity className="h-10 w-10 items-center justify-center">
+                <TouchableOpacity
+                  onPress={(e) => {
+                    e.stopPropagation();
+                  }}
+                  className="h-10 w-10 items-center justify-center"
+                >
                   <Ionicons
                     name="ellipsis-vertical"
                     size={18}

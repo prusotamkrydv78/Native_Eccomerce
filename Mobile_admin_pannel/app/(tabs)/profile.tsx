@@ -46,7 +46,10 @@ export default function SettingsScreen() {
                   className="h-full w-full rounded-full"
                 />
               </View>
-              <TouchableOpacity className="absolute bottom-1 right-1 h-10 w-10 bg-[#F83758] rounded-full border-4 border-white items-center justify-center">
+              <TouchableOpacity
+                onPress={() => router.push("/(stack)/edit-profile")}
+                className="absolute bottom-1 right-1 h-10 w-10 bg-[#F83758] rounded-full border-4 border-white items-center justify-center"
+              >
                 <Ionicons name="pencil" size={16} color="white" />
               </TouchableOpacity>
             </View>
@@ -61,7 +64,10 @@ export default function SettingsScreen() {
           {/* ACCOUNT SETTINGS CARD */}
           <View className="px-4 mb-4">
             <View className="bg-slate-50 rounded-xl overflow-hidden">
-              <TouchableOpacity className="flex-row items-center px-4 py-2">
+              <TouchableOpacity
+                onPress={() => router.push("/(stack)/edit-profile")}
+                className="flex-row items-center px-4 py-2"
+              >
                 <View className="h-10 w-10 bg-white rounded-xl items-center justify-center">
                   <Ionicons name="person-outline" size={20} color="#64748b" />
                 </View>
@@ -73,7 +79,10 @@ export default function SettingsScreen() {
 
               <View className="h-[1px] bg-white mx-6" />
 
-              <TouchableOpacity className="flex-row items-center px-4 py-2">
+              <TouchableOpacity
+                onPress={() => router.push("/(stack)/change-password")}
+                className="flex-row items-center px-4 py-2"
+              >
                 <View className="h-10 w-10 bg-white rounded-xl items-center justify-center">
                   <Ionicons
                     name="lock-closed-outline"
