@@ -19,10 +19,10 @@ export default function EditProductScreen() {
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
         {/* HEADER */}
-        <View className="px-6 py-4 flex-row justify-between items-center">
+        <View className="px-4 py-2 flex-row justify-between items-center">
           <TouchableOpacity
             onPress={() => router.back()}
-            className="h-12 w-12 bg-slate-50 rounded-2xl items-center justify-center"
+            className="h-12 w-12 bg-slate-100 rounded-xl items-center justify-center"
           >
             <Ionicons name="chevron-back" size={24} color="#171717" />
           </TouchableOpacity>
@@ -38,11 +38,11 @@ export default function EditProductScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40 }}
+          contentContainerStyle={{ paddingBottom: 20 }}
         >
           {/* IMAGE SECTION */}
-          <View className="px-6 mt-4">
-            <View className="relative h-64 bg-slate-50 rounded-[40px] overflow-hidden">
+          <View className="px-4 mt-4">
+            <View className="relative h-64 bg-slate-100 rounded-xl overflow-hidden">
               <Image
                 source={{
                   uri: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
@@ -50,12 +50,12 @@ export default function EditProductScreen() {
                 className="h-full w-full"
                 resizeMode="cover"
               />
-              <TouchableOpacity className="absolute top-4 right-4 h-10 w-10 bg-white rounded-full items-center justify-center">
+              <TouchableOpacity className="absolute top-1 right-1 h-10 w-10 bg-white rounded-xl items-center justify-center">
                 <Ionicons name="pencil" size={18} color="#171717" />
               </TouchableOpacity>
             </View>
             {/* Pagination Dots */}
-            <View className="flex-row justify-center mt-6">
+            <View className="flex-row justify-center mt-3">
               <View className="h-1.5 w-6 bg-[#F83758] rounded-full mx-1" />
               <View className="h-1.5 w-1.5 bg-slate-200 rounded-full mx-1" />
               <View className="h-1.5 w-1.5 bg-slate-200 rounded-full mx-1" />
@@ -63,10 +63,10 @@ export default function EditProductScreen() {
           </View>
 
           {/* INPUT FIELDS */}
-          <View className="px-6 mt-10">
+          <View className="px-4 mt-3">
             {/* Name */}
-            <View className="flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4 mb-4">
-              <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-4">
+            <View className="flex-row items-center bg-slate-100 rounded-xl px-4 py-3 mb-2">
+              <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-2">
                 <Ionicons name="briefcase-outline" size={20} color="#64748b" />
               </View>
               <TextInput
@@ -77,8 +77,8 @@ export default function EditProductScreen() {
             </View>
 
             {/* Category */}
-            <View className="flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4 mb-4">
-              <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-4">
+            <View className="flex-row items-center  bg-slate-100 rounded-xl px-4 py-3 mb-2">
+              <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-2">
                 <Ionicons name="apps-outline" size={20} color="#64748b" />
               </View>
               <Text className="flex-1 text-slate-800 font-medium">
@@ -88,9 +88,9 @@ export default function EditProductScreen() {
             </View>
 
             {/* Price & Stock Row */}
-            <View className="flex-row justify-between mb-4">
-              <View className="w-[48%] flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-3">
+            <View className="flex-row justify-between mb-2">
+              <View className="w-[48%] flex-row items-center bg-slate-100 rounded-xl px-4 py-3 mb-2">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-2">
                   <Ionicons name="logo-usd" size={18} color="#64748b" />
                 </View>
                 <TextInput
@@ -100,8 +100,8 @@ export default function EditProductScreen() {
                   placeholderTextColor="#94a3b8"
                 />
               </View>
-              <View className="w-[48%] flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-3">
+              <View className="w-[48%] flex-row items-center bg-slate-100 rounded-xl px-4 py-3 mb-2">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-2">
                   <Ionicons name="archive-outline" size={20} color="#64748b" />
                 </View>
                 <TextInput
@@ -114,7 +114,7 @@ export default function EditProductScreen() {
             </View>
 
             {/* Description */}
-            <View className="bg-slate-50 rounded-[32px] px-6 py-5 mb-8">
+            <View className="bg-slate-100 rounded-xl px-4 mb-4">
               <TextInput
                 defaultValue="Experience world-class silence and superior sound with our latest noise-cancelling technology. Perfect for travel or office use."
                 multiline
@@ -126,7 +126,7 @@ export default function EditProductScreen() {
             </View>
 
             {/* Toggle */}
-            <View className="flex-row justify-between items-center px-4 mb-4">
+            <View className="flex-row justify-between items-center px-4">
               <View>
                 <Text className="text-slate-700 font-semibold text-base">
                   Active Listing
@@ -146,8 +146,8 @@ export default function EditProductScreen() {
         </ScrollView>
 
         {/* BOTTOM ACTIONS */}
-        <View className="px-6 py-6 border-t border-slate-50 flex-row justify-between items-center">
-          <TouchableOpacity className="bg-slate-50 py-4 px-8 rounded-[24px] flex-row items-center">
+        <View className="px-4 py-4 border-t border-slate-100 flex-row justify-between items-center">
+          <TouchableOpacity className="bg-slate-100 py-4 px-4 rounded-xl flex-row items-center">
             <Ionicons
               name="trash-outline"
               size={20}
@@ -156,14 +156,14 @@ export default function EditProductScreen() {
             />
             <Text className="text-slate-500 font-semibold ml-2">Delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="flex-1 ml-4 bg-[#F83758] py-4 rounded-[24px] flex-row items-center justify-center">
+          <TouchableOpacity className="flex-1 ml-2 bg-[#F83758] py-4 rounded-xl flex-row items-center justify-center">
             <Ionicons
               name="checkmark"
               size={20}
-              color="white"
+              color="black"
               className="mr-2"
             />
-            <Text className="text-surface-light font-semibold ml-2">
+            <Text className="text-surface-light font-semibold">
               Save Changes
             </Text>
           </TouchableOpacity>

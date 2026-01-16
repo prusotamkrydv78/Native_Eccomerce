@@ -52,10 +52,10 @@ export default function OrderDetailScreen() {
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
         {/* HEADER */}
-        <View className="px-6 py-4 flex-row justify-between items-center">
+        <View className="px-4 py-2 flex-row justify-between items-center">
           <TouchableOpacity
             onPress={() => router.back()}
-            className="h-12 w-12 bg-slate-50 rounded-2xl items-center justify-center"
+            className="h-12 w-12 bg-slate-100 rounded-xl items-center justify-center"
           >
             <Ionicons name="chevron-back" size={24} color="#171717" />
           </TouchableOpacity>
@@ -69,38 +69,38 @@ export default function OrderDetailScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40 }}
+          contentContainerStyle={{ paddingBottom: 10 }}
         >
           {/* Order Meta Info */}
-          <View className="px-8 py-6">
-            <Text className="text-slate-400 text-xs font-medium mb-1">
+          <View className="px-4 py-4">
+            <Text className="text-slate-400 text-xs font-medium ">
               Order No.
             </Text>
             <View className="flex-row justify-between items-end">
               <Text className="text-slate-900 text-3xl font-semibold">
                 {order.id}
               </Text>
-              <Text className="text-slate-400 text-xs font-semibold mb-1">
+              <Text className="text-slate-400 text-xs font-semibold ">
                 {order.date}
               </Text>
             </View>
           </View>
 
           {/* Payment Status Card */}
-          <View className="px-6 mb-8">
-            <View className="bg-slate-50 rounded-[32px] p-6 flex-row items-center">
-              <View className="h-12 w-12 bg-emerald-50 rounded-2xl items-center justify-center">
+          <View className="px-4 mb-2">
+            <View className="bg-slate-100 rounded-xl p-4 flex-row items-center">
+              <View className="h-12 w-12 bg-emerald-100 rounded-xl items-center justify-center">
                 <Ionicons name="checkmark-circle" size={24} color="#10b981" />
               </View>
               <View className="flex-1 ml-4">
                 <Text className="text-slate-900 font-semibold text-base">
                   Payment Verified
                 </Text>
-                <Text className="text-slate-400 text-xs mt-0.5 font-medium">
+                <Text className="text-slate-400 text-xs  font-medium">
                   Payment confirmed via {order.paymentMethod}
                 </Text>
               </View>
-              <View className="bg-emerald-100 px-3 py-1.5 rounded-lg">
+              <View className="bg-emerald-100 px-3 py-1.5 rounded-md">
                 <Text className="text-emerald-700 text-[10px] font-bold tracking-widest uppercase">
                   {order.paymentStatus}
                 </Text>
@@ -109,19 +109,19 @@ export default function OrderDetailScreen() {
           </View>
 
           {/* Order Status Section */}
-          <View className="px-8 mb-10">
-            <Text className="text-slate-900 text-lg font-semibold mb-4">
+          <View className="px-4 mb-4">
+            <Text className="text-slate-900 text-lg font-semibold mb-1">
               Order Status
             </Text>
-            <TouchableOpacity className="bg-slate-50 rounded-2xl px-6 py-4 flex-row justify-between items-center">
+            <TouchableOpacity className="bg-slate-100 rounded-xl px-4 py-4 flex-row justify-between items-center">
               <Text className="text-slate-600 font-medium">{order.status}</Text>
               <Ionicons name="chevron-down" size={18} color="#94a3b8" />
             </TouchableOpacity>
           </View>
 
           {/* Items List */}
-          <View className="px-8 mb-10">
-            <View className="flex-row justify-between items-center mb-6">
+          <View className="px-4 mb-2">
+            <View className="flex-row justify-between items-center mb-2">
               <Text className="text-slate-900 text-lg font-semibold">
                 Items
               </Text>
@@ -132,21 +132,21 @@ export default function OrderDetailScreen() {
             {order.items.map((item) => (
               <View
                 key={item.id}
-                className="bg-slate-50/50 rounded-[32px] p-2 mb-4 flex-row items-center"
+                className="bg-slate-100/50 rounded-xl p-2 mb-2 flex-row items-center"
               >
                 <Image
                   source={{ uri: item.image }}
-                  className="h-20 w-20 rounded-[24px] bg-slate-50"
+                  className="h-20 w-20 rounded-xl bg-slate-100"
                   resizeMode="cover"
                 />
-                <View className="flex-1 ml-4">
+                <View className="flex-1 ml-2">
                   <Text
                     className="text-slate-900 font-semibold text-base"
                     numberOfLines={1}
                   >
                     {item.name}
                   </Text>
-                  <Text className="text-slate-400 text-xs mt-1 font-medium">
+                  <Text className="text-slate-400 text-xs mt-0.5 font-medium">
                     {item.details}
                   </Text>
                   <View className="flex-row justify-between items-center mt-3 pr-4">
@@ -163,19 +163,19 @@ export default function OrderDetailScreen() {
           </View>
 
           {/* Shipping Details */}
-          <View className="px-8 mb-10">
-            <Text className="text-slate-900 text-lg font-semibold mb-6">
+          <View className="px-4 mb-2">
+            <Text className="text-slate-900 text-lg font-semibold mb-2">
               Shipping Details
             </Text>
-            <View className="bg-slate-50 rounded-[40px] p-6">
-              <View className="flex-row items-center mb-6">
+            <View className="bg-slate-100 rounded-xl p-4">
+              <View className="flex-row items-center mb-4">
                 <Image
                   source={{ uri: order.customer.avatar }}
-                  className="h-12 w-12 rounded-2xl"
+                  className="h-12 w-12 rounded-xl"
                 />
-                <View className="ml-4">
+                <View className="ml-2">
                   <View className="flex-row items-center">
-                    <Text className="text-slate-900 font-semibold text-base mr-2">
+                    <Text className="text-slate-900 font-semibold text-base mr-1">
                       {order.customer.name}
                     </Text>
                     <Ionicons
@@ -193,7 +193,7 @@ export default function OrderDetailScreen() {
                 <View className="h-10 w-10 bg-white rounded-xl items-center justify-center">
                   <Ionicons name="location-outline" size={18} color="#F83758" />
                 </View>
-                <View className="flex-1 ml-4">
+                <View className="flex-1 ml-2">
                   <Text className="text-slate-900 font-semibold text-sm">
                     123 Market St
                   </Text>
@@ -206,11 +206,11 @@ export default function OrderDetailScreen() {
           </View>
 
           {/* Action Buttons */}
-          <View className="px-8 flex-row gap-4 mb-10">
-            <TouchableOpacity className="flex-1 bg-slate-50 py-4 rounded-2xl items-center justify-center">
+          <View className="px-4 flex-row gap-2 mb-2">
+            <TouchableOpacity className="flex-1 bg-slate-100 py-4 rounded-xl items-center justify-center">
               <Text className="text-slate-400 font-semibold">Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="flex-[1.5] bg-[#F83758] py-4 rounded-2xl items-center justify-center">
+            <TouchableOpacity className="flex-[1.5] bg-[#F83758] py-4 rounded-xl items-center justify-center">
               <Text className="text-surface-light font-semibold">
                 Mark Shipped
               </Text>
@@ -218,8 +218,8 @@ export default function OrderDetailScreen() {
           </View>
 
           {/* Order Summary */}
-          <View className="px-8 py-10 bg-slate-50 rounded-t-[48px]">
-            <Text className="text-slate-900 text-lg font-semibold mb-6">
+          <View className="mx-4 px-2 py-2 bg-slate-100 rounded-xl">
+            <Text className="text-slate-900 text-lg font-semibold mb-2">
               Order Summary
             </Text>
             <View className="space-y-4">
@@ -241,7 +241,7 @@ export default function OrderDetailScreen() {
                   {order.summary.shipping}
                 </Text>
               </View>
-              <View className="h-[1px] bg-slate-200/50 w-full my-4" />
+              <View className="h-[1px] bg-slate-400/50 w-full my-2" />
               <View className="flex-row justify-between items-center">
                 <Text className="text-slate-900 text-xl font-semibold">
                   Total

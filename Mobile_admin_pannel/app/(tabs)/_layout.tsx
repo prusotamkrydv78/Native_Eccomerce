@@ -12,7 +12,7 @@ export default function RootLayout() {
           tabBarStyle: {
             borderTopWidth: 0,
             elevation: 2,
-            // height: 65,
+            height: 65,
             paddingBottom: 20,
             paddingTop: 8,
             backgroundColor: "#ffffff",

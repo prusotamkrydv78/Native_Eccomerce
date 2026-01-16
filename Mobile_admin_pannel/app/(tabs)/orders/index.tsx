@@ -147,71 +147,69 @@ export default function OrdersScreen() {
           {/* ORDERS LIST */}
           <View className="px-4">
             {ORDERS_DATA.map((order) => (
-              <>
-                <View key={order.id} className="bg-white rounded-[40px] my-4">
-                  {/* Order Meta */}
-                  <View className="flex-row justify-between items-center mb-4">
-                    <View>
-                      <Text className="text-slate-900 font-semibold text-base">
-                        Order #{order.id}
-                      </Text>
-                      <Text className="text-slate-400 text-xs font-medium">
-                        {order.date}
-                      </Text>
-                    </View>
-                    <View
-                      style={{ backgroundColor: order.statusBg }}
-                      className="px-4 py-2 rounded-xl"
-                    >
-                      <Text
-                        style={{ color: order.statusColor }}
-                        className="text-[10px] font-semibold uppercase tracking-widest"
-                      >
-                        {order.status}
-                      </Text>
-                    </View>
-                  </View>
-
-                  {/* Customer Info */}
-                  <View className="flex-row mb-4">
-                    <Image
-                      source={{ uri: order.avatar }}
-                      className="h-14 w-14 rounded-xl bg-slate-100"
-                    />
-                    <View className="flex-1 ml-2">
-                      <Text className="text-slate-900 font-semibold text-lg">
-                        {order.customer}
-                      </Text>
-                      <Text className="text-slate-500 text-xs font-medium">
-                        {order.items} • {order.category}
-                      </Text>
-                    </View>
-                    <Text className="text-[#F83758] text-xl font-semibold">
-                      {order.price}
+              <View key={order.id} className="bg-white rounded-[40px] my-4">
+                {/* Order Meta */}
+                <View className="flex-row justify-between items-center mb-4">
+                  <View>
+                    <Text className="text-slate-900 font-semibold text-base">
+                      Order #{order.id}
+                    </Text>
+                    <Text className="text-slate-400 text-xs font-medium">
+                      {order.date}
                     </Text>
                   </View>
-
-                  {/* Actions */}
-                  <View className="flex-row gap-3">
-                    <TouchableOpacity
-                      onPress={() => router.push(`/orders/${order.id}`)}
-                      className={`flex-1 py-2 rounded-xl items-center justify-center ${order.hasTrack ? "bg-slate-100" : "bg-slate-100 w-full"}`}
+                  <View
+                    style={{ backgroundColor: order.statusBg }}
+                    className="px-4 py-2 rounded-xl"
+                  >
+                    <Text
+                      style={{ color: order.statusColor }}
+                      className="text-[10px] font-semibold uppercase tracking-widest"
                     >
-                      <Text className="text-slate-500 font-semibold">
-                        Details
-                      </Text>
-                    </TouchableOpacity>
-                    {order.hasTrack && (
-                      <TouchableOpacity className="flex-1 bg-[#F83758] py-4 rounded-xl items-center justify-center">
-                        <Text className="text-surface-light font-semibold">
-                          Track
-                        </Text>
-                      </TouchableOpacity>
-                    )}
+                      {order.status}
+                    </Text>
                   </View>
                 </View>
-                <View className="ml-2 h-[1px] flex-1 bg-slate-300" />
-              </>
+
+                {/* Customer Info */}
+                <View className="flex-row mb-4">
+                  <Image
+                    source={{ uri: order.avatar }}
+                    className="h-14 w-14 rounded-xl bg-slate-100"
+                  />
+                  <View className="flex-1 ml-2">
+                    <Text className="text-slate-900 font-semibold text-lg">
+                      {order.customer}
+                    </Text>
+                    <Text className="text-slate-500 text-xs font-medium">
+                      {order.items} • {order.category}
+                    </Text>
+                  </View>
+                  <Text className="text-[#F83758] text-xl font-semibold">
+                    {order.price}
+                  </Text>
+                </View>
+
+                {/* Actions */}
+                <View className="flex-row gap-3">
+                  <TouchableOpacity
+                    onPress={() => router.push(`/orders/${order.id}`)}
+                    className={`flex-1 py-2 rounded-xl items-center justify-center ${order.hasTrack ? "bg-slate-100" : "bg-slate-100 w-full"}`}
+                  >
+                    <Text className="text-slate-500 font-semibold">
+                      Details
+                    </Text>
+                  </TouchableOpacity>
+                  {order.hasTrack && (
+                    <TouchableOpacity className="flex-1 bg-[#F83758] py-4 rounded-xl items-center justify-center">
+                      <Text className="text-surface-light font-semibold">
+                        Track
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                <View className="mt-2 h-[1px] flex-1 bg-slate-300" />
+              </View>
             ))}
           </View>
         </ScrollView>

@@ -128,7 +128,7 @@ export default function SettingsScreen() {
           <View className="px-4">
             <TouchableOpacity
               className="flex-row items-center justify-center bg-rose-100 py-3 rounded-xl"
-              onPress={() => router.replace("/(auth)/login")}
+              onPress={() => router.replace("/(auth)/startup")}
             >
               <Ionicons name="log-out-outline" size={22} color="#F83758" />
               <Text className="text-[#F83758] font-semibold ml-2 text-base">

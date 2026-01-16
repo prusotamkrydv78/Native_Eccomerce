@@ -41,16 +41,16 @@ export default function ProductDetailScreen() {
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
         {/* HEADER */}
-        <View className="px-6 py-4 flex-row justify-between items-center absolute top-0 left-0 right-0 z-10">
+        <View className="px-4 py-4 flex-row justify-between items-center absolute top-0 left-0 right-0 z-10">
           <TouchableOpacity
             onPress={() => router.back()}
-            className="h-12 w-12 bg-white/90 rounded-2xl items-center justify-center shadow-sm shadow-slate-200"
+            className="h-12 w-12 bg-white/90 rounded-xl items-center justify-center shadow-sm shadow-slate-200"
           >
             <Ionicons name="chevron-back" size={24} color="#171717" />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push("/products/edit-product")}
-            className="h-12 w-12 bg-white/90 rounded-2xl items-center justify-center shadow-sm shadow-slate-200"
+            className="h-12 w-12 bg-white/90 rounded-xl items-center justify-center shadow-sm shadow-slate-200"
           >
             <Ionicons name="pencil-outline" size={20} color="#171717" />
           </TouchableOpacity>
@@ -58,7 +58,7 @@ export default function ProductDetailScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
+          contentContainerStyle={{ paddingBottom: 80 }}
         >
           {/* IMAGE SECTION */}
           <View className="w-full h-96">
@@ -71,15 +71,15 @@ export default function ProductDetailScreen() {
           </View>
 
           {/* CONTENT SECTION */}
-          <View className="flex-1 bg-white -mt-10 rounded-t-[48px] px-8 pt-10">
+          <View className="flex-1 bg-white -mt-5 rounded-t-2xl px-4 pt-4">
             {/* Category & Rating */}
-            <View className="flex-row justify-between items-center mb-6">
-              <View className="bg-slate-50 px-4 py-2 rounded-2xl">
+            <View className="flex-row justify-between items-center mb-2">
+              <View className="bg-slate-50 px-2 py-2 rounded-xl">
                 <Text className="text-slate-400 text-xs font-semibold uppercase tracking-widest">
                   {product.category}
                 </Text>
               </View>
-              <View className="flex-row items-center bg-amber-50 px-3 py-2 rounded-2xl">
+              <View className="flex-row items-center bg-amber-100 px-2 py-2 rounded-xl">
                 <Ionicons name="star" size={14} color="#f59e0b" />
                 <Text className="text-amber-700 text-xs font-bold ml-1">
                   {product.rating}
@@ -91,14 +91,14 @@ export default function ProductDetailScreen() {
             </View>
 
             {/* Title & Price */}
-            <Text className="text-slate-900 text-3xl font-semibold leading-tight mb-2">
+            <Text className="text-slate-900 text-3xl font-semibold leading-tight">
               {product.name}
             </Text>
-            <View className="flex-row items-center mb-8">
+            <View className="flex-row items-center mb-2">
               <Text className="text-[#F83758] text-2xl font-bold">
                 {product.price}
               </Text>
-              <View className="ml-4 px-3 py-1 bg-emerald-50 rounded-lg">
+              <View className="ml-2 px-2 py-1 bg-emerald-100 rounded-md">
                 <Text className="text-emerald-600 text-[10px] font-bold uppercase tracking-wider">
                   {product.status}
                 </Text>
@@ -106,36 +106,36 @@ export default function ProductDetailScreen() {
             </View>
 
             {/* Stats Grid */}
-            <View className="flex-row justify-between mb-10">
-              <View className="w-[31%] bg-slate-50 p-4 rounded-3xl items-center">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mb-3">
+            <View className="flex-row justify-between mb-2">
+              <View className="w-[31%] bg-slate-100 p-4 rounded-xl items-center justify-center">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mb-3">
                   <Ionicons name="barcode-outline" size={18} color="#64748b" />
                 </View>
                 <Text className="text-slate-400 text-[9px] font-bold uppercase tracking-wider">
                   SKU
                 </Text>
                 <Text
-                  className="text-slate-700 text-[11px] font-semibold mt-1"
+                  className="text-slate-700 text-[11px] font-semibold"
                   numberOfLines={1}
                 >
                   WH-001
                 </Text>
               </View>
 
-              <View className="w-[31%] bg-slate-50 p-4 rounded-3xl items-center">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mb-3">
+              <View className="w-[31%] bg-slate-100 p-4 rounded-xl items-center justify-center">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mb-3">
                   <Ionicons name="layers-outline" size={18} color="#64748b" />
                 </View>
                 <Text className="text-slate-400 text-[9px] font-bold uppercase tracking-wider">
                   Stock
                 </Text>
-                <Text className="text-slate-700 text-xs font-semibold mt-1">
+                <Text className="text-slate-700 text-xs font-semibold">
                   {product.units} Units
                 </Text>
               </View>
 
-              <View className="w-[31%] bg-slate-50 p-4 rounded-3xl items-center">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mb-3">
+              <View className="w-[31%] bg-slate-100 p-4 rounded-xl items-center justify-center">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mb-3">
                   <Ionicons
                     name="trending-up-outline"
                     size={18}
@@ -145,15 +145,15 @@ export default function ProductDetailScreen() {
                 <Text className="text-slate-400 text-[9px] font-bold uppercase tracking-wider">
                   Growth
                 </Text>
-                <Text className="text-slate-700 text-xs font-semibold mt-1">
+                <Text className="text-slate-700 text-xs font-semibold">
                   +12.4%
                 </Text>
               </View>
             </View>
 
             {/* Description */}
-            <View className="mb-10">
-              <Text className="text-slate-900 text-lg font-semibold mb-4">
+            <View className="mb-4">
+              <Text className="text-slate-900 text-lg font-semibold">
                 Description
               </Text>
               <Text className="text-slate-400 text-sm leading-6">
@@ -162,9 +162,9 @@ export default function ProductDetailScreen() {
             </View>
 
             {/* Additional Details Placeholder */}
-            <View className="bg-slate-50 p-6 rounded-[32px]">
+            <View className="bg-slate-100 p-4 rounded-xl">
               <View className="flex-row items-center mb-4">
-                <View className="h-8 w-8 bg-white rounded-xl items-center justify-center mr-3">
+                <View className="h-8 w-8 bg-white rounded-md items-center justify-center mr-3">
                   <Ionicons
                     name="shield-checkmark-outline"
                     size={16}
@@ -176,7 +176,7 @@ export default function ProductDetailScreen() {
                 </Text>
               </View>
               <View className="flex-row items-center">
-                <View className="h-8 w-8 bg-white rounded-xl items-center justify-center mr-3">
+                <View className="h-8 w-8 bg-white rounded-md items-center justify-center mr-3">
                   <Ionicons name="refresh-outline" size={16} color="#3b82f6" />
                 </View>
                 <Text className="text-slate-600 text-xs font-semibold">
@@ -188,13 +188,13 @@ export default function ProductDetailScreen() {
         </ScrollView>
 
         {/* BOTTOM ACTION */}
-        <View className="absolute bottom-0 left-0 right-0 bg-white/80 border-t border-slate-50 px-8 py-6">
+        <View className="absolute bottom-0 left-0 right-0 bg-white/80 border-t border-slate-100 px-4 py-2">
           <TouchableOpacity
             onPress={() => router.push("/products/edit-product")}
-            className="w-full bg-[#F83758] py-5 rounded-[24px] flex-row items-center justify-center"
+            className="w-full bg-[#F83758] py-4 rounded-xl flex-row items-center justify-center"
           >
-            <Ionicons name="settings-outline" size={20} color="white" />
-            <Text className="text-surface-light font-semibold ml-3 text-base">
+            <Ionicons name="settings" size={20} color="black" />
+            <Text className="text-surface-light font-semibold ml-2 text-base">
               Modify Product
             </Text>
           </TouchableOpacity>

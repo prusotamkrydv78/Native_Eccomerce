@@ -19,10 +19,10 @@ export default function AddProductScreen() {
     <SafeAreaContextWrapper>
       <View className="flex-1 bg-white">
         {/* HEADER */}
-        <View className="px-6 py-4 flex-row justify-between items-center">
+        <View className="px-4 py-2 flex-row justify-between items-center">
           <TouchableOpacity
             onPress={() => router.back()}
-            className="h-12 w-12 bg-slate-50 rounded-2xl items-center justify-center"
+            className="h-12 w-12 bg-slate-100 rounded-xl items-center justify-center"
           >
             <Ionicons name="chevron-back" size={24} color="#171717" />
           </TouchableOpacity>
@@ -38,23 +38,23 @@ export default function AddProductScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 40 }}
+          contentContainerStyle={{ paddingBottom: 0 }}
         >
           {/* IMAGE UPLOAD SECTION */}
-          <View className="px-6 mt-4">
-            <View className="h-64 bg-slate-50 rounded-[40px] items-center justify-center overflow-hidden">
+          <View className="px-4 mt-2">
+            <View className="h-64 bg-slate-100 rounded-xl items-center justify-center overflow-hidden">
               <View className="items-center">
-                <View className="h-16 w-16 bg-white rounded-3xl items-center justify-center mb-4">
+                <View className="h-16 w-16 bg-white rounded-xl items-center justify-center mb-4">
                   <Ionicons
                     name="cloud-upload-outline"
                     size={32}
                     color="#F83758"
                   />
                 </View>
-                <Text className="text-slate-400    text-sm tracking-tight">
+                <Text className="text-slate-600 text-sm tracking-tight">
                   Upload Product Images
                 </Text>
-                <Text className="text-slate-300 text-xs mt-1">
+                <Text className="text-slate-400 text-xs">
                   Tap to select from gallery
                 </Text>
               </View>
@@ -68,10 +68,10 @@ export default function AddProductScreen() {
           </View>
 
           {/* INPUT FIELDS */}
-          <View className="px-6 mt-10">
+          <View className="px-4 mt-4">
             {/* Name */}
-            <View className="flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4 mb-4">
-              <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-4">
+            <View className="flex-row items-center bg-slate-100 rounded-xl px-4 py-4 mb-2">
+              <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-4">
                 <Ionicons name="briefcase-outline" size={20} color="#64748b" />
               </View>
               <TextInput
@@ -82,7 +82,7 @@ export default function AddProductScreen() {
             </View>
 
             {/* Category */}
-            <View className="flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4 mb-4">
+            <View className="flex-row items-center bg-slate-100 rounded-xl px-4 py-2 mb-2">
               <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-4">
                 <Ionicons name="apps-outline" size={20} color="#64748b" />
               </View>
@@ -93,9 +93,9 @@ export default function AddProductScreen() {
             </View>
 
             {/* Price & Stock Row */}
-            <View className="flex-row justify-between mb-4">
-              <View className="w-[48%] flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-3">
+            <View className="flex-row justify-between mb-2">
+              <View className="w-[48%] flex-row items-center bg-slate-100 rounded-xl px-2 py-2 mb-2">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-3">
                   <Ionicons name="logo-usd" size={18} color="#64748b" />
                 </View>
                 <TextInput
@@ -105,8 +105,8 @@ export default function AddProductScreen() {
                   placeholderTextColor="#94a3b8"
                 />
               </View>
-              <View className="w-[48%] flex-row items-center bg-slate-50 rounded-[28px] px-6 py-4">
-                <View className="h-10 w-10 bg-white rounded-2xl items-center justify-center mr-3">
+              <View className="w-[48%] flex-row items-center bg-slate-100 rounded-xl px-4 py-2 mb-2">
+                <View className="h-10 w-10 bg-white rounded-xl items-center justify-center mr-3">
                   <Ionicons name="archive-outline" size={20} color="#64748b" />
                 </View>
                 <TextInput
@@ -119,7 +119,7 @@ export default function AddProductScreen() {
             </View>
 
             {/* Description */}
-            <View className="bg-slate-50 rounded-[32px] px-6 py-5 mb-8">
+            <View className="bg-slate-100 rounded-xl px-4 py-2 mb-4">
               <TextInput
                 placeholder="Experience world-class silence and superior sound with our latest noise-cancelling technology..."
                 multiline
@@ -131,10 +131,10 @@ export default function AddProductScreen() {
             </View>
 
             {/* Toggle */}
-            <View className="flex-row justify-between items-center px-4 mb-4">
+            <View className="flex-row justify-between items-center  mb-2">
               <View>
                 <Text className="text-slate-700 text-base">Active Listing</Text>
-                <Text className="text-slate-400 text-xs mt-0.5">
+                <Text className="text-slate-400 text-xs">
                   Visible to customers
                 </Text>
               </View>
@@ -149,18 +149,18 @@ export default function AddProductScreen() {
         </ScrollView>
 
         {/* BOTTOM ACTIONS */}
-        <View className="px-6 py-6  flex-row justify-between items-center">
-          <TouchableOpacity className="bg-slate-50 py-4 px-8 rounded-[24px]">
+        <View className="px-4 py-2  flex-row justify-between items-center">
+          <TouchableOpacity className="bg-slate-100 py-4 px-8 rounded-xl">
             <Text className="text-slate-400 ">Cancel</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="flex-1 ml-4 bg-[#F83758] py-4 rounded-[24px] flex-row items-center justify-center">
+          <TouchableOpacity className="flex-1 ml-2 bg-[#F83758] py-4 rounded-xl flex-row items-center justify-center">
             <Ionicons
               name="checkmark"
               size={20}
               color="white"
               className="mr-2"
             />
-            <Text className="text-[#fff]  ml-2">Add Product</Text>
+            <Text className="text-[#fff] ">Add Product</Text>
           </TouchableOpacity>
         </View>
       </View>
