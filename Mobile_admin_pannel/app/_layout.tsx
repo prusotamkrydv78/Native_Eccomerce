@@ -13,8 +13,7 @@ const RootLayout = () => {
   }, []);
 
   return (
-    <>
-      {/* <AuthGate> */}
+    <AuthGate>
       <QueryClientProvider client={queryClient}>
         <StatusBar backgroundColor="white" />
         <Stack
@@ -24,8 +23,7 @@ const RootLayout = () => {
         />
         <PortalHost />
       </QueryClientProvider>
-      {/* </AuthGate> */}
-    </>
+    </AuthGate>
   );
 };
 

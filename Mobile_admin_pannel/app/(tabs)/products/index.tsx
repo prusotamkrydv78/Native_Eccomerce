@@ -83,8 +83,74 @@ const PRODUCTS_DATA = [
 
 const CATEGORIES = ["All", "In Stock", "Low Stock", "Out of Stock"];
 
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  oldPrice: string | null;
+  rating: string | null;
+  tag: string | null;
+  status: string;
+  statusColor: string;
+  statusBg: string;
+  units: string;
+  sku: string;
+  image: string;
+}
+
 export default function ProductsScreen() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [originalProducts, setOriginalProducts] = useState(PRODUCTS_DATA);
+  const [filteredProducts, setFilteredProducts] = useState(PRODUCTS_DATA);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isShorted, setIsShorted] = useState(false)
+
+  const filterProducts = (category: string) => {
+    if (category == "All") {
+      setFilteredProducts(originalProducts);
+      setActiveCategory("All");
+      setIsShorted(false)
+      setSearchQuery("")
+      return;
+    }
+    const filtered = originalProducts.filter((product: Product) =>
+      product.status.toLocaleLowerCase() == category.toLocaleLowerCase() &&
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setActiveCategory(category);
+    setFilteredProducts(filtered);
+    setIsShorted(false)
+  }
+
+  const searchProducts = (query: string) => {
+    setSearchQuery(query);
+    const searched = originalProducts.filter((product: Product) =>
+      product.name.toLowerCase().includes(query.toLowerCase()) &&
+      (activeCategory == "All" || product.status.toLocaleLowerCase() == activeCategory.toLocaleLowerCase())
+    );
+    setFilteredProducts(searched);
+    setIsShorted(false)
+  }
+  const sortProductsByPrice = () => {
+    if (isShorted) {
+
+      const sorted = [...filteredProducts].sort((a: Product, b: Product) =>
+        parseFloat(a.price.replace("$", ""))
+        -
+        parseFloat(b.price.replace("$", ""))
+      );
+      setFilteredProducts(sorted);
+    } else {
+      const sorted = [...filteredProducts].sort((a: Product, b: Product) =>
+        parseFloat(b.price.replace("$", ""))
+        -
+        parseFloat(a.price.replace("$", ""))
+      );
+      setFilteredProducts(sorted);
+    }
+    setIsShorted(!isShorted)
+  }
 
   return (
     <SafeAreaContextWrapper>
@@ -114,6 +180,8 @@ export default function ProductsScreen() {
               placeholder="Search products..."
               className="flex-1 ml-2 text-slate-800 font-medium"
               placeholderTextColor="#94a3b8"
+              value={searchQuery}
+              onChangeText={searchProducts}
             />
             <TouchableOpacity>
               <Ionicons name="options-outline" size={20} color="#64748b" />
@@ -135,17 +203,17 @@ export default function ProductsScreen() {
               {CATEGORIES.map((cat) => (
                 <TouchableOpacity
                   key={cat}
-                  onPress={() => setActiveCategory(cat)}
-                  className={`ml-2 px-3 py-2 rounded-xl ${
-                    activeCategory === cat ? "bg-[#F83758]" : "bg-slate-100"
-                  }`}
+                  onPress={() =>
+                    filterProducts(cat)
+                  }
+                  className={`ml-2 px-3 py-2 rounded-xl ${activeCategory === cat ? "bg-[#F83758]" : "bg-slate-100"
+                    }`}
                 >
                   <Text
-                    className={`font-semibold text-xs ${
-                      activeCategory === cat
-                        ? "text-surface-light"
-                        : "text-slate-500"
-                    }`}
+                    className={`font-semibold text-xs ${activeCategory === cat
+                      ? "text-surface-light"
+                      : "text-slate-500"
+                      }`}
                   >
                     {cat}
                   </Text>
@@ -157,13 +225,15 @@ export default function ProductsScreen() {
           {/* LIST HEADER INFO */}
           <View className="px-4 flex-row justify-between items-center mb-2">
             <View className="flex-row items-baseline">
-              <Text className="text-slate-700 text-xl font-semibold">20</Text>
+              <Text className="text-slate-700 text-xl font-semibold">{filteredProducts.length}</Text>
               <Text className="text-slate-400 text-xs font-semibold ml-2">
                 Items
               </Text>
             </View>
             <View className="flex-row">
-              <TouchableOpacity className="flex-row items-center bg-slate-100 px-4 py-2 rounded-xl mr-2">
+              <TouchableOpacity
+                onPress={() => sortProductsByPrice()}
+                className="flex-row items-center bg-slate-100 px-4 py-2 rounded-xl mr-2">
                 <Text className="text-slate-600 text-xs font-semibold mr-2">
                   Sort
                 </Text>
@@ -173,18 +243,18 @@ export default function ProductsScreen() {
                   color="#64748b"
                 />
               </TouchableOpacity>
-              <TouchableOpacity className="flex-row items-center bg-slate-100 px-4 py-2 rounded-xl">
+              {/* <TouchableOpacity className="flex-row items-center bg-slate-100 px-4 py-2 rounded-xl">
                 <Text className="text-slate-600 text-xs font-semibold mr-2">
                   Filter
                 </Text>
                 <Ionicons name="funnel-outline" size={14} color="#64748b" />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
 
           {/* PRODUCTS LIST - CLEAN BORDERLESS TILES */}
           <View className="px-2">
-            {PRODUCTS_DATA.map((product) => (
+            {filteredProducts.map((product: Product) => (
               <TouchableOpacity
                 key={product.id}
                 onPress={() => router.push(`/products/${product.id}`)}

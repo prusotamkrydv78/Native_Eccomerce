@@ -19,11 +19,25 @@ const Login = () => {
     password: "password123",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate: login, isPending: loading, isError, error } = useLogin();
+  const { mutate: login, isPending: loading } = useLogin();
 
   const handleLogin = () => {
-    if (isError) Alert.alert("Error, Plz try again");
-    login({ email: adminData.email, password: adminData.password });
+    if (!adminData.email || !adminData.password) {
+      Alert.alert("Validation Error", "Please enter both email and password");
+      return;
+    }
+    login(
+      { email: adminData.email, password: adminData.password },
+      {
+        onError: (error: any) => {
+          const message =
+            error?.response?.data?.message ||
+            error?.message ||
+            "Login failed. Please try again.";
+          Alert.alert("Login Error", message);
+        },
+      }
+    );
   };
 
   return (

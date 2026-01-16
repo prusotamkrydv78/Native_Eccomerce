@@ -70,8 +70,74 @@ const USERS_DATA = [
 
 const FILTER_OPTIONS = ["All Users", "Active", "Blocked", "Admin"];
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string | null;
+  roleColor?: string;
+  roleBg?: string;
+  avatar: string;
+  status: string;
+}
+
 export default function UserListScreen() {
   const [activeFilter, setActiveFilter] = useState("All Users");
+  const [originalUsers] = useState(USERS_DATA);
+  const [filteredUsers, setFilteredUsers] = useState(USERS_DATA);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filterUsers = (filter: string) => {
+    if (filter === "All Users") {
+      setFilteredUsers(originalUsers);
+      setActiveFilter("All Users");
+      setSearchQuery("");
+      return;
+    }
+
+    const filtered = originalUsers.filter((user: User) => {
+      const matchesSearch =
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase());
+
+      if (!matchesSearch) return false;
+
+      if (filter === "Active") return user.status.toLowerCase() === "active";
+      if (filter === "Blocked")
+        return user.status.toLowerCase() === "blocked";
+      if (filter === "Admin")
+        return (user.role || "").toLowerCase() === "admin";
+
+      return true;
+    });
+
+    setActiveFilter(filter);
+    setFilteredUsers(filtered);
+  };
+
+  const searchUsers = (query: string) => {
+    setSearchQuery(query);
+
+    const searched = originalUsers.filter((user: User) => {
+      const matchesSearch =
+        user.name.toLowerCase().includes(query.toLowerCase()) ||
+        user.email.toLowerCase().includes(query.toLowerCase());
+
+      if (!matchesSearch) return false;
+
+      if (activeFilter === "All Users") return true;
+      if (activeFilter === "Active")
+        return user.status.toLowerCase() === "active";
+      if (activeFilter === "Blocked")
+        return user.status.toLowerCase() === "blocked";
+      if (activeFilter === "Admin")
+        return (user.role || "").toLowerCase() === "admin";
+
+      return true;
+    });
+
+    setFilteredUsers(searched);
+  };
 
   return (
     <SafeAreaContextWrapper>
@@ -113,6 +179,8 @@ export default function UserListScreen() {
                 placeholder="Search any user..."
                 className="flex-1 ml-3 text-slate-700 font-medium"
                 placeholderTextColor="#94a3b8"
+                value={searchQuery}
+                onChangeText={searchUsers}
               />
               <TouchableOpacity>
                 <Ionicons name="filter-outline" size={20} color="#94a3b8" />
@@ -130,7 +198,7 @@ export default function UserListScreen() {
               {FILTER_OPTIONS.map((filter) => (
                 <TouchableOpacity
                   key={filter}
-                  onPress={() => setActiveFilter(filter)}
+                  onPress={() => filterUsers(filter)}
                   className={`mr-2 px-4 py-3.5 rounded-xl ${
                     activeFilter === filter ? "bg-[#F83758]" : "bg-slate-100"
                   }`}
@@ -151,7 +219,7 @@ export default function UserListScreen() {
 
           {/* USERS LIST */}
           <View className="px-4">
-            {USERS_DATA.map((user) => (
+            {filteredUsers.map((user: User) => (
               <TouchableOpacity
                 key={user.id}
                 onPress={() => router.push(`/users/${user.id}`)}

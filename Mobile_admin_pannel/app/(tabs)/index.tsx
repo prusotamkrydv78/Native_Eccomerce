@@ -2,9 +2,11 @@ import SafeAreaContextWrapper from "@/components/SafeAreaContextWrapper";
 import { Text } from "@/components/ui/text";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import { ScrollView, TouchableOpacity, View, StatusBar } from "react-native";
 
 const HomeScreen = () => {
+  const router = useRouter();
   return (
     <SafeAreaContextWrapper>
       <StatusBar barStyle="dark-content" />
@@ -91,7 +93,10 @@ const HomeScreen = () => {
                     </Text>
                   </View>
                 </View>
-                <TouchableOpacity className="py-2 px-4 bg-slate-100 rounded-xl">
+                <TouchableOpacity
+                  onPress={() => router.push("/(tabs)/products")}
+                  className="py-2 px-4 bg-slate-100 rounded-xl"
+                >
                   <Text className="text-[#F83758] text-xs font-semibold uppercase tracking-wider">
                     Manage
                   </Text>
@@ -155,24 +160,29 @@ const HomeScreen = () => {
                     icon: "add",
                     color: "#F83758",
                     bg: "#FEF2F4",
+                    screen: "/(tabs)/products/add-product",
                   },
                   {
                     label: "Orders",
                     icon: "reader",
                     color: "#6366f1",
                     bg: "#EEF2FF",
+
+                    screen: "/(tabs)/orders",
                   },
                   {
                     label: "Users",
                     icon: "people",
                     color: "#10b981",
                     bg: "#ECFDF5",
+                    screen: "/(tabs)/users",
                   },
                   {
                     label: "Help",
                     icon: "help-circle",
                     color: "#64748b",
                     bg: "#F8FAFC",
+                    screen: "/(tabs)/products/add-product",
                   },
                 ].map((item, idx) => (
                   <View
@@ -180,6 +190,7 @@ const HomeScreen = () => {
                     className="items-center justify-center w-[22%]"
                   >
                     <TouchableOpacity
+                      onPress={() => router.push(item.screen as any)}
                       style={{ backgroundColor: item.bg }}
                       className="h-16 w-16 rounded-xl items-center justify-center mb-2"
                     >
@@ -203,7 +214,7 @@ const HomeScreen = () => {
                 <Text className="text-slate-700 text-lg font-semibold">
                   Recent Activity
                 </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push("/(tabs)/orders")}>
                   <Text className="text-slate-400 text-xs underline font-medium">
                     View History
                   </Text>

@@ -68,8 +68,75 @@ const ORDERS_DATA = [
 
 const FILTER_OPTIONS = ["All", "Pending", "Shipped", "Delivered"];
 
+interface Order {
+  id: string;
+  date: string;
+  customer: string;
+  items: string;
+  category: string;
+  price: string;
+  status: string;
+  statusColor: string;
+  statusBg: string;
+  avatar: string;
+  hasTrack: boolean;
+}
+
 export default function OrdersScreen() {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [originalOrders] = useState(ORDERS_DATA);
+  const [filteredOrders, setFilteredOrders] = useState(ORDERS_DATA);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isShorted, setIsShorted] = useState(false);
+
+  const filterOrders = (filter: string) => {
+    if (filter === "All") {
+      setFilteredOrders(originalOrders);
+      setActiveFilter("All");
+      setIsShorted(false);
+      setSearchQuery("");
+      return;
+    }
+
+    const filtered = originalOrders.filter((order: Order) =>
+      order.status.toLowerCase() === filter.toLowerCase() &&
+      (order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order.id.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+
+    setActiveFilter(filter);
+    setFilteredOrders(filtered);
+    setIsShorted(false);
+  };
+
+  const searchOrders = (query: string) => {
+    setSearchQuery(query);
+    const searched = originalOrders.filter((order: Order) =>
+      (order.customer.toLowerCase().includes(query.toLowerCase()) ||
+        order.id.toLowerCase().includes(query.toLowerCase())) &&
+      (activeFilter === "All" ||
+        order.status.toLowerCase() === activeFilter.toLowerCase())
+    );
+    setFilteredOrders(searched);
+    setIsShorted(false);
+  };
+
+  const sortOrdersByPrice = () => {
+    if (isShorted) {
+      const sorted = [...filteredOrders].sort((a: Order, b: Order) =>
+        parseFloat(a.price.replace("$", "")) -
+        parseFloat(b.price.replace("$", ""))
+      );
+      setFilteredOrders(sorted);
+    } else {
+      const sorted = [...filteredOrders].sort((a: Order, b: Order) =>
+        parseFloat(b.price.replace("$", "")) -
+        parseFloat(a.price.replace("$", ""))
+      );
+      setFilteredOrders(sorted);
+    }
+    setIsShorted(!isShorted);
+  };
 
   return (
     <SafeAreaContextWrapper>
@@ -110,6 +177,8 @@ export default function OrdersScreen() {
                 placeholder="Search"
                 className="flex-1 ml-2 text-slate-700 font-medium"
                 placeholderTextColor="#94a3b8"
+                value={searchQuery}
+                onChangeText={searchOrders}
               />
               <Ionicons name="mic-outline" size={20} color="#94a3b8" />
             </View>
@@ -125,7 +194,7 @@ export default function OrdersScreen() {
               {FILTER_OPTIONS.map((filter) => (
                 <TouchableOpacity
                   key={filter}
-                  onPress={() => setActiveFilter(filter)}
+                  onPress={() => filterOrders(filter)}
                   className={`mr-2 px-4 py-3 rounded-xl ${
                     activeFilter === filter ? "bg-slate-400" : "bg-slate-50"
                   }`}
@@ -146,7 +215,7 @@ export default function OrdersScreen() {
 
           {/* ORDERS LIST */}
           <View className="px-4">
-            {ORDERS_DATA.map((order) => (
+            {filteredOrders.map((order: Order) => (
               <View key={order.id} className="bg-white rounded-[40px] my-4">
                 {/* Order Meta */}
                 <View className="flex-row justify-between items-center mb-4">
@@ -194,7 +263,9 @@ export default function OrdersScreen() {
                 <View className="flex-row gap-3">
                   <TouchableOpacity
                     onPress={() => router.push(`/orders/${order.id}`)}
-                    className={`flex-1 py-2 rounded-xl items-center justify-center ${order.hasTrack ? "bg-slate-100" : "bg-slate-100 w-full"}`}
+                    className={`flex-1 py-2 rounded-xl items-center justify-center ${
+                      order.hasTrack ? "bg-slate-100" : "bg-slate-100 w-full"
+                    }`}
                   >
                     <Text className="text-slate-500 font-semibold">
                       Details

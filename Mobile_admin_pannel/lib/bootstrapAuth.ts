@@ -1,11 +1,19 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { useAuthStore } from "../store/authStore";
 
+// Keys for secure storage (must match authStore.ts)
+const ACCESS_TOKEN_KEY = "accessToken";
+const REFRESH_TOKEN_KEY = "refreshToken";
+const USER_KEY = "user";
+
 export const bootstrapAuth = async () => {
+  const { setLoading } = useAuthStore.getState();
+
   try {
-    const accessToken = await AsyncStorage.getItem("accessToken");
-    const refreshToken = await AsyncStorage.getItem("refreshToken");
-    const userJson = await AsyncStorage.getItem("user");
+    // Read from secure storage (encrypted)
+    const accessToken = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+    const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+    const userJson = await SecureStore.getItemAsync(USER_KEY);
 
     if (accessToken && refreshToken && userJson) {
       useAuthStore.setState({
@@ -15,11 +23,14 @@ export const bootstrapAuth = async () => {
         },
         user: JSON.parse(userJson),
         isAuthenticated: true,
+        isLoading: false,
       });
+    } else {
+      setLoading(false);
     }
   } catch (error) {
     console.error("Auth Bootstrap Error:", error);
-    // Optionally clear everything if something is corrupt
+    // Clear everything if something is corrupt
     await useAuthStore.getState().logout();
   }
 };
