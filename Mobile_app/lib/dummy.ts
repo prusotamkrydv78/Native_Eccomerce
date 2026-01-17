@@ -6,16 +6,47 @@ export type Product = {
   category: string;
   image: string;
   description: string;
+  isPopular?: boolean;
+  isNew?: boolean;
+  isFlashSale?: boolean;
+  discount?: number;
 };
 
 export const CATEGORIES = [
-  "All",
-  "Neo Wear",
-  "Tech",
-  "Beauty",
-  "Home",
-  "Sports",
-  "Kids",
+  { name: "All", icon: "grid-outline" },
+  { name: "Neo Wear", icon: "shirt-outline" },
+  { name: "Tech", icon: "laptop-outline" },
+  { name: "Beauty", icon: "sparkles-outline" },
+  { name: "Home", icon: "home-outline" },
+  { name: "Sports", icon: "fitness-outline" },
+  { name: "Kids", icon: "happy-outline" },
+];
+
+export const BANNERS = [
+  {
+    id: "b1",
+    title: "Summer Collection",
+    subtitle: "Up to 50% OFF",
+    image:
+      "https://images.unsplash.com/photo-1523381235312-3590050e9961?auto=format&fit=crop&w=1200&q=80",
+    color: "#6366F1",
+  },
+  {
+    id: "b2",
+    title: "Tech Week",
+    subtitle: "New Gadgets In Stock",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+    color: "#F97316",
+  },
+  {
+    id: "b3",
+    title: "Beauty Glow",
+    subtitle: "Premium Skin Care",
+    image:
+      "https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?auto=format&fit=crop&w=1200&q=80",
+    color: "#EC4899",
+  },
 ];
 
 export const PRODUCTS: Product[] = [
@@ -29,17 +60,22 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
     description:
       "Ultra-light, shock-absorb, and designed for long missions. Neon comfort meets daily durability.",
+    isPopular: true,
+    isFlashSale: true,
+    discount: 20,
   },
   {
     id: "p2",
-    title: "Quantum Noise Cancelling Headset",
+    title: "Quantum Noise Headset",
     price: 199.0,
     rating: 4.7,
     category: "Tech",
     image:
-      "https://images.unsplash.com/photo-1518441987397-873fe5c6a16d?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",
     description:
       "Immersive sound. Zero distraction. A futuristic headset tuned for focus and bass.",
+    isPopular: true,
+    isNew: true,
   },
   {
     id: "p3",
@@ -51,6 +87,8 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1612810436541-336d5462d4a1?auto=format&fit=crop&w=900&q=80",
     description:
       "Hydration + glow. Lightweight formula for a clean, bright look.",
+    isFlashSale: true,
+    discount: 15,
   },
   {
     id: "p4",
@@ -63,57 +101,45 @@ export const PRODUCTS: Product[] = [
     description:
       "Soft light with futuristic lines. Perfect for work and late-night browsing.",
   },
+  {
+    id: "p5",
+    title: "Cosmic Mechanical Keyboard",
+    price: 149.0,
+    rating: 4.9,
+    category: "Tech",
+    image:
+      "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=900&q=80",
+    description:
+      "Tactile feedback with RGB symphony. Built for the elite players.",
+    isNew: true,
+  },
+  {
+    id: "p6",
+    title: "Cyberpunk Tech Hoodie",
+    price: 89.0,
+    rating: 4.4,
+    category: "Neo Wear",
+    image:
+      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80",
+    description:
+      "Stay warm in the digital winter. High-grade fabric with hidden pockets.",
+    isPopular: true,
+  },
+  {
+    id: "p7",
+    title: "Hydra Tech Bottle",
+    price: 25.0,
+    rating: 4.3,
+    category: "Sports",
+    image:
+      "https://images.unsplash.com/photo-1602143399032-bd8161587343?auto=format&fit=crop&w=900&q=80",
+    description: "Smart temperature tracking bottle for peak performance.",
+  },
 ];
 
-export type Order = {
-  id: string;
-  createdAt: string;
-  status: "Processing" | "Shipped" | "Delivered";
-  total: number;
-  items: { title: string; qty: number; price: number }[];
-};
-
-export const ORDERS: Order[] = [
-  {
-    id: "o1001",
-    createdAt: "2026-01-12",
-    status: "Shipped",
-    total: 328.99,
-    items: [
-      { title: "Quantum Noise Cancelling Headset", qty: 1, price: 199 },
-      { title: "Nebula Runner Sneakers", qty: 1, price: 129.99 },
-    ],
-  },
-  {
-    id: "o1002",
-    createdAt: "2026-01-03",
-    status: "Delivered",
-    total: 39.5,
-    items: [{ title: "Aurora Glow Serum", qty: 1, price: 39.5 }],
-  },
-];
-
-export type Notification = {
-  id: string;
-  title: string;
-  body: string;
-  time: string;
-  type: "order" | "promo" | "system";
-};
-
-export const NOTIFICATIONS: Notification[] = [
-  {
-    id: "n1",
-    title: "Order shipped",
-    body: "Your order o1001 is on the way.",
-    time: "2h ago",
-    type: "order",
-  },
-  {
-    id: "n2",
-    title: "New drop",
-    body: "Neo Wear collection is live. Limited stock.",
-    time: "1d ago",
-    type: "promo",
-  },
+export const TRUST_INDICATORS = [
+  { icon: "shield-checkmark-outline", text: "Secure Payments" },
+  { icon: "bus-outline", text: "Free Delivery" },
+  { icon: "refresh-outline", text: "Easy Returns" },
+  { icon: "headset-outline", text: "24/7 Support" },
 ];
