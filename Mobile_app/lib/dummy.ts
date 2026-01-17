@@ -143,3 +143,58 @@ export const TRUST_INDICATORS = [
   { icon: "refresh-outline", text: "Easy Returns" },
   { icon: "headset-outline", text: "24/7 Support" },
 ];
+
+export const ORDERS = [
+  {
+    id: 'ORD-9921',
+    createdAt: 'Oct 24, 2026',
+    total: 358.99,
+    status: 'Shipped',
+    items: [
+      { title: 'Nebula Runner Sneakers', qty: 1, price: 129.99, productId: 'p1' },
+      { title: 'Quantum Noise Headset', qty: 1, price: 199.00, productId: 'p2' },
+    ],
+  },
+  {
+    id: 'ORD-8812',
+    createdAt: 'Oct 20, 2026',
+    total: 89.00,
+    status: 'Delivered',
+    items: [
+      { title: 'Cyberpunk Tech Hoodie', qty: 1, price: 89.00, productId: 'p6' },
+    ],
+  },
+  {
+    id: 'ORD-7754',
+    createdAt: 'Oct 15, 2026',
+    total: 59.00,
+    status: 'Processing',
+    items: [
+      { title: 'Neo Minimal Desk Lamp', qty: 1, price: 59.00, productId: 'p4' },
+    ],
+  },
+];
+
+export const NOTIFICATIONS = [
+  {
+    id: 'n1',
+    type: 'order',
+    title: 'Order Shipped!',
+    body: 'Your order #ORD-9921 has been shipped and is on its way.',
+    time: '2 hours ago',
+  },
+  {
+    id: 'n2',
+    type: 'promo',
+    title: 'Weekend Flash Sale',
+    body: 'Get up to 70% off on all tech gadgets this weekend only!',
+    time: '5 hours ago',
+  },
+  {
+    id: 'n3',
+    type: 'alert',
+    title: 'Security Alert',
+    body: 'A new login was detected from a Chrome browser on Linux.',
+    time: '1 day ago',
+  },
+];

@@ -188,7 +188,10 @@ function CategoryQuickAccess({
               style={styles.catItem}
               onPress={() => {
                 Haptics.selectionAsync();
-                onSelect(cat.name);
+                router.push({
+                  pathname: "/shop",
+                  params: { cat: cat.name },
+                } as any);
               }}
             >
               <View
@@ -277,16 +280,7 @@ export default function EnhancedHomeTab() {
   );
   const newArrivals = useMemo(() => PRODUCTS.filter((p) => p.isNew), []);
 
-  const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => {
-      const okCat =
-        selectedCategory === "All" ? true : p.category === selectedCategory;
-      const okTitle = searchQuery.trim()
-        ? p.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
-        : true;
-      return okCat && okTitle;
-    });
-  }, [searchQuery, selectedCategory]);
+  const filteredProducts = PRODUCTS; // No longer filtered on home screen as search bar redirects
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.neutral[50] }}>
@@ -341,9 +335,18 @@ export default function EnhancedHomeTab() {
             </View>
           </View>
 
-          <View style={styles.searchSection}>
-            <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
-          </View>
+          <TouchableOpacity
+            style={styles.searchSection}
+            activeOpacity={0.9}
+            onPress={() => router.push("/search")}
+          >
+            <View style={styles.fakeSearchBar}>
+              <Ionicons name="search" size={20} color={colors.neutral[400]} />
+              <Text style={styles.fakeSearchText}>
+                Search products, categories...
+              </Text>
+            </View>
+          </TouchableOpacity>
 
           <TouchableOpacity style={styles.deliveryInfo} activeOpacity={0.7}>
             <Ionicons
@@ -367,10 +370,7 @@ export default function EnhancedHomeTab() {
         <BannerCarousel />
 
         {/* 2. Category Quick Access */}
-        <CategoryQuickAccess
-          selectedCat={selectedCategory}
-          onSelect={setSelectedCategory}
-        />
+        <CategoryQuickAccess selectedCat={"All"} onSelect={() => {}} />
 
         {/* 3. Flash Sale Section */}
         <View style={styles.flashSaleSection}>
@@ -956,5 +956,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 12,
     color: colors.neutral[400],
+  },
+  fakeSearchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F8FAFC",
+    height: 52,
+    borderRadius: borderRadius.xl,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: "#F1F5F9",
+  },
+  fakeSearchText: {
+    marginLeft: 10,
+    fontSize: 14,
+    color: colors.neutral[400],
+    fontWeight: "600",
   },
 });

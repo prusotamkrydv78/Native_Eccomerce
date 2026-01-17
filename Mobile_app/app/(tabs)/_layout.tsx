@@ -27,14 +27,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="shop"
         options={{
-          title: "Search",
+          title: "Shop",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" size={size} color={color} />
+            <Ionicons name="bag-handle" size={size} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
         name="wishlist"
         options={{
@@ -60,6 +61,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          href: null,
         }}
       />
       <Tabs.Screen

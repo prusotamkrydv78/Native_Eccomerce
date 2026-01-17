@@ -1,128 +1,295 @@
 import React from "react";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Image } from "expo-image";
-import Screen from "../../components/ui/Screen";
-import GlassCard from "../../components/ui/GlassCard";
-import NeonButton from "../../components/ui/NeonButton";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, {
+  FadeInDown,
+  Layout,
+  SlideInRight,
+} from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
+
+import { AnimatedScreen, GlassCard, Button } from "../../components/ui";
 import { useCart } from "../../store/cart";
+import { colors, shadows, borderRadius, typography } from "../../lib/theme";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
+function CartItem({
+  item,
+  onUpdateQty,
+  onRemove,
+  index,
+}: {
+  item: any;
+  onUpdateQty: (qty: number) => void;
+  onRemove: () => void;
+  index: number;
+}) {
+  return (
+    <Animated.View
+      entering={FadeInDown.delay(index * 100)}
+      layout={Layout.springify()}
+      className="mb-4"
+    >
+      <GlassCard className="p-3" variant="glass">
+        <View className="flex-row">
+          {/* Image Container */}
+          <View className="h-24 w-24 rounded-2xl overflow-hidden bg-slate-50 border border-slate-100">
+            <Image
+              source={{ uri: item.image }}
+              style={StyleSheet.absoluteFill}
+              contentFit="cover"
+            />
+          </View>
+
+          {/* Details Container */}
+          <View className="flex-1 ml-4 justify-between py-1">
+            <View className="flex-row justify-between items-start">
+              <View className="flex-1 pr-2">
+                <Text
+                  numberOfLines={1}
+                  className="text-slate-900 font-black text-base"
+                >
+                  {item.title}
+                </Text>
+                <Text className="text-slate-400 font-bold text-xs uppercase mt-1">
+                  Qty: {item.qty} • ${item.price.toFixed(2)}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  onRemove();
+                }}
+                className="p-1"
+              >
+                <Ionicons
+                  name="trash-outline"
+                  size={18}
+                  color={colors.error.main}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View className="flex-row items-center justify-between">
+              <Text className="text-indigo-600 font-black text-lg">
+                ${(item.price * item.qty).toFixed(2)}
+              </Text>
+
+              <View className="flex-row items-center bg-slate-50 rounded-xl px-1 border border-slate-100">
+                <TouchableOpacity
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    onUpdateQty(item.qty - 1);
+                  }}
+                  className="h-8 w-8 items-center justify-center"
+                >
+                  <Ionicons name="remove" size={18} color="#111827" />
+                </TouchableOpacity>
+                <View className="min-w-[24] items-center">
+                  <Text className="text-slate-900 font-black text-sm">
+                    {item.qty}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    onUpdateQty(item.qty + 1);
+                  }}
+                  className="h-8 w-8 items-center justify-center"
+                >
+                  <Ionicons name="add" size={18} color="#111827" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+      </GlassCard>
+    </Animated.View>
+  );
+}
 
 export default function CartTab() {
   const { items, itemCount, subtotal, setQty, removeItem } = useCart();
+  const tax = subtotal * 0.1; // 10% tax
+  const shipping = subtotal > 0 ? 15.0 : 0;
+  const total = subtotal + tax + shipping;
 
   return (
-    <Screen>
-      <View className="px-4 pt-3">
+    <AnimatedScreen variant="gradient" showDecorations>
+      <View className="px-5 pt-6 pb-2">
         <View className="flex-row items-center justify-between">
           <View>
-            <Text className="text-slate-900 text-xl font-extrabold">Cart</Text>
-            <Text className="text-slate-600 text-xs font-semibold mt-1">
-              {itemCount} item(s)
+            <Text className="text-2xl font-black text-slate-900 tracking-tight">
+              Shopping Bag
+            </Text>
+            <Text className="text-slate-500 font-semibold text-sm">
+              {itemCount} products ready for checkout
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={() => router.push("/(tabs)/home" as any)}
-            className="px-3 py-2 rounded-xl bg-white border border-slate-200"
-            activeOpacity={0.9}
-          >
-            <Text className="text-slate-900 font-extrabold text-xs">Shop more</Text>
-          </TouchableOpacity>
+          <View className="h-10 w-10 rounded-full bg-white items-center justify-center border border-slate-100 shadow-sm">
+            <Ionicons name="bag-handle" size={20} color={colors.primary[500]} />
+          </View>
         </View>
       </View>
 
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 24 }}>
-        <View className="px-4 mt-3">
-          {items.length === 0 ? (
-            <GlassCard className="p-5">
-              <Text className="text-slate-900 font-extrabold text-base">
-                Your cart is empty
-              </Text>
-              <Text className="text-slate-600 text-sm font-semibold mt-2">
-                Add items from Home or Search.
-              </Text>
-            </GlassCard>
-          ) : (
-            items.map((it) => (
-              <GlassCard key={it.productId} className="p-3 mb-3">
-                <View className="flex-row">
-                  <View className="h-20 w-20 rounded-xl overflow-hidden bg-[#F3F4F6]">
-                    {!!it.image ? (
-                      <Image
-                        source={{ uri: it.image }}
-                        style={{ width: "100%", height: "100%" }}
-                        contentFit="cover"
-                      />
-                    ) : (
-                      <View className="flex-1 items-center justify-center">
-                        <Ionicons name="image" size={20} color="#6B7280" />
-                      </View>
-                    )}
-                  </View>
+      <ScrollView
+        className="flex-1 mt-4"
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 150 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {items.length === 0 ? (
+          <View className="items-center justify-center py-20 px-10">
+            <View className="h-24 w-24 rounded-full bg-slate-50 items-center justify-center mb-6">
+              <Ionicons
+                name="cart-outline"
+                size={40}
+                color={colors.neutral[200]}
+              />
+            </View>
+            <Text className="text-slate-900 font-black text-xl text-center">
+              Your bag is empty
+            </Text>
+            <Text className="text-slate-400 font-semibold text-center mt-2 leading-5">
+              Looks like you haven't added anything to your cart yet.
+            </Text>
+            <Button
+              title="Browse Shop"
+              variant="primary"
+              onPress={() => router.push("/shop")}
+              style={{ marginTop: 32, width: "100%" }}
+            />
+          </View>
+        ) : (
+          <>
+            {items.map((it, idx) => (
+              <CartItem
+                key={it.productId}
+                item={it}
+                index={idx}
+                onUpdateQty={(qty) => setQty(it.productId, qty)}
+                onRemove={() => removeItem(it.productId)}
+              />
+            ))}
 
-                  <View className="flex-1 ml-3">
-                    <Text numberOfLines={2} className="text-slate-900 font-extrabold">
-                      {it.title}
-                    </Text>
-                    <Text className="text-slate-700 font-semibold mt-1">
-                      ${it.price.toFixed(2)}
-                    </Text>
+            {/* Price Summary Card */}
+            <Animated.View
+              entering={FadeInDown.delay(items.length * 100).duration(600)}
+              className="mt-4"
+            >
+              <GlassCard className="p-5" variant="glass">
+                <Text className="text-slate-900 font-black text-lg mb-4">
+                  Price Summary
+                </Text>
 
-                    <View className="flex-row items-center mt-3">
-                      <TouchableOpacity
-                        onPress={() => setQty(it.productId, it.qty - 1)}
-                        className="h-9 w-9 rounded-lg bg-white border border-slate-200 items-center justify-center"
-                        activeOpacity={0.9}
-                      >
-                        <Ionicons name="remove" size={18} color="#111827" />
-                      </TouchableOpacity>
-                      <Text className="text-slate-900 font-extrabold mx-3">
-                        {it.qty}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => setQty(it.productId, it.qty + 1)}
-                        className="h-9 w-9 rounded-lg bg-white border border-slate-200 items-center justify-center"
-                        activeOpacity={0.9}
-                      >
-                        <Ionicons name="add" size={18} color="#111827" />
-                      </TouchableOpacity>
+                <View className="flex-row justify-between mb-3">
+                  <Text className="text-slate-500 font-semibold">Subtotal</Text>
+                  <Text className="text-slate-900 font-black">
+                    ${subtotal.toFixed(2)}
+                  </Text>
+                </View>
 
-                      <View className="flex-1" />
+                <View className="flex-row justify-between mb-3">
+                  <Text className="text-slate-500 font-semibold">
+                    Shipping (Standard)
+                  </Text>
+                  <Text className="text-slate-900 font-black">
+                    ${shipping.toFixed(2)}
+                  </Text>
+                </View>
 
-                      <TouchableOpacity
-                        onPress={() => removeItem(it.productId)}
-                        className="h-9 w-9 rounded-lg bg-white border border-slate-200 items-center justify-center"
-                        activeOpacity={0.9}
-                      >
-                        <Ionicons name="trash-outline" size={18} color="#111827" />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
+                <View className="flex-row justify-between mb-4">
+                  <Text className="text-slate-500 font-semibold">
+                    Est. Tax (10%)
+                  </Text>
+                  <Text className="text-slate-900 font-black">
+                    ${tax.toFixed(2)}
+                  </Text>
+                </View>
+
+                <View className="h-[1px] bg-slate-100 w-full mb-4" />
+
+                <View className="flex-row justify-between items-center">
+                  <Text className="text-slate-900 font-black text-xl">
+                    Total Amount
+                  </Text>
+                  <Text className="text-indigo-600 font-black text-2xl">
+                    ${total.toFixed(2)}
+                  </Text>
                 </View>
               </GlassCard>
-            ))
-          )}
+            </Animated.View>
 
-          {items.length > 0 && (
-            <GlassCard className="p-4 mt-2">
-              <View className="flex-row items-center justify-between">
-                <Text className="text-slate-700 font-semibold">Subtotal</Text>
-                <Text className="text-slate-900 font-extrabold">
-                  ${subtotal.toFixed(2)}
-                </Text>
-              </View>
-              <Text className="text-slate-500 text-xs font-semibold mt-2">
-                Shipping and taxes calculated at checkout.
-              </Text>
-              <NeonButton
-                title="Checkout"
-                onPress={() => router.push("/(tabs)/(stack)/checkout" as any)}
-                className="mt-4"
-              />
-            </GlassCard>
-          )}
-        </View>
+            {/* Promo Code Card */}
+            <Animated.View
+              entering={FadeInDown.delay(items.length * 100 + 100).duration(
+                600,
+              )}
+              className="mt-4"
+            >
+              <TouchableOpacity className="flex-row items-center justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                <View className="flex-row items-center">
+                  <Ionicons
+                    name="pricetag-outline"
+                    size={20}
+                    color={colors.primary[500]}
+                  />
+                  <Text className="ml-3 font-bold text-slate-700">
+                    Apply Promo Code
+                  </Text>
+                </View>
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color={colors.neutral[300]}
+                />
+              </TouchableOpacity>
+            </Animated.View>
+          </>
+        )}
       </ScrollView>
-    </Screen>
+
+      {/* Floating Checkout Footer */}
+      {items.length > 0 && (
+        <View style={styles.footer}>
+          <LinearGradient
+            colors={["rgba(255,255,255,0)", "rgba(255,255,255,1)"]}
+            style={styles.footerGradient}
+          />
+          <View className="px-5 pb-8">
+            <Button
+              title="Proceed to Checkout"
+              variant="primary"
+              onPress={() => router.push("/(tabs)/(stack)/checkout" as any)}
+              style={{ height: 60 }}
+              rightIcon="arrow-forward"
+            />
+          </View>
+        </View>
+      )}
+    </AnimatedScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+  },
+  footerGradient: {
+    height: 60,
+  },
+});
