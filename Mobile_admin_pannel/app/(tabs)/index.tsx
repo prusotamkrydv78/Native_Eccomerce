@@ -3,323 +3,357 @@ import { Text } from "@/components/ui/text";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { ScrollView, TouchableOpacity, View, StatusBar } from "react-native";
+import {
+  ScrollView,
+  TouchableOpacity,
+  View,
+  StatusBar,
+  Dimensions,
+} from "react-native";
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
+const MetricCard = ({ title, value, subValue, icon, color, trend }: any) => (
+  <View
+    style={{ width: (SCREEN_WIDTH - 48) / 2 }}
+    className="bg-slate-50 p-4 rounded-3xl border border-slate-100 mb-4"
+  >
+    <View className="flex-row justify-between items-start mb-3">
+      <View
+        style={{ backgroundColor: `${color}15` }}
+        className="h-10 w-10 rounded-2xl items-center justify-center"
+      >
+        <Ionicons name={icon} size={20} color={color} />
+      </View>
+      {trend && (
+        <View className="flex-row items-center bg-emerald-50 px-2 py-0.5 rounded-lg">
+          <Ionicons name="trending-up" size={12} color="#10b981" />
+          <Text className="text-emerald-600 text-[10px] font-bold ml-1">
+            {trend}%
+          </Text>
+        </View>
+      )}
+    </View>
+    <Text className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+      {title}
+    </Text>
+    <Text className="text-slate-900 text-xl font-black mt-1">{value}</Text>
+    {subValue && (
+      <Text className="text-slate-500 text-[10px] font-medium mt-1">
+        {subValue}
+      </Text>
+    )}
+  </View>
+);
+
+const QuickAction = ({ label, icon, color, bg, onPress }: any) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={{ width: (SCREEN_WIDTH - 60) / 3 }}
+    className="items-center mb-6"
+  >
+    <View
+      style={{ backgroundColor: bg }}
+      className="h-14 w-14 rounded-2xl items-center justify-center mb-2 shadow-sm"
+    >
+      <Ionicons name={icon} size={24} color={color} />
+    </View>
+    <Text className="text-slate-600 text-[11px] font-semibold text-center">
+      {label}
+    </Text>
+  </TouchableOpacity>
+);
+
+const InventoryAlert = ({ name, stock, type }: any) => (
+  <View className="flex-row items-center justify-between bg-white p-3 rounded-2xl border border-slate-100 mb-2">
+    <View className="flex-row items-center">
+      <View
+        className={`h-2 w-2 rounded-full mr-3 ${type === "out" ? "bg-rose-500" : "bg-amber-500"}`}
+      />
+      <Text className="text-slate-700 font-semibold text-sm">{name}</Text>
+    </View>
+    <View
+      className={`px-3 py-1 rounded-full ${type === "out" ? "bg-rose-50" : "bg-amber-50"}`}
+    >
+      <Text
+        className={`text-[10px] font-black ${type === "out" ? "text-rose-600" : "text-amber-600"}`}
+      >
+        {type === "out" ? "STOCK OUT" : `${stock} LEFT`}
+      </Text>
+    </View>
+  </View>
+);
 
 const HomeScreen = () => {
   const router = useRouter();
+
   return (
     <SafeAreaContextWrapper>
       <StatusBar barStyle="dark-content" />
       <View className="flex-1 bg-white">
-        {/* HEADER SECTION - REFINED & BORDERLESS */}
-        <View className="px-4 pt-3 pb-3 flex-row justify-between items-center bg-white">
-          <View className="flex-1">
-            <Text className="text-slate-400 text-[11px] uppercase tracking-[2px]">
-              Internal Control
+        {/* HEADER */}
+        <View className="px-5 pt-4 pb-4 flex-row justify-between items-center">
+          <View>
+            <Text className="text-slate-400 text-[11px] font-black uppercase tracking-[3px]">
+              Admin Pannel
             </Text>
-            <Text className="text-slate-900 text-2xl font-semibold">
-              Management
-            </Text>
-            <Text className="text-slate-400 text-xs font-medium mt-1">
-              Overview of today’s activity
+            <Text className="text-slate-900 text-2xl font-black">
+              Dashboard
             </Text>
           </View>
-          <View className="flex-row items-center">
-            <TouchableOpacity
-              onPress={() => router.push("/(stack)/help")}
-              className="h-11 w-11 bg-slate-100 rounded-xl items-center justify-center mr-2"
-            >
-              <Ionicons name="search-outline" size={20} color="#171717" />
+          <View className="flex-row">
+            <TouchableOpacity className="h-10 w-10 bg-slate-50 rounded-xl items-center justify-center mr-2">
+              <Ionicons name="search-outline" size={20} color="#64748b" />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => router.push("/(stack)/notifications")}
-              className="h-11 w-11 bg-slate-100 rounded-xl items-center justify-center"
-            >
+            <TouchableOpacity className="h-10 w-10 bg-slate-50 rounded-xl items-center justify-center">
               <Ionicons
                 name="notifications-outline"
                 size={20}
-                color="#171717"
+                color="#64748b"
               />
-              <View className="absolute top-3.5 right-3.5 h-2 w-2 bg-[#F83758] rounded-full " />
+              <View className="absolute top-3 right-3 h-2 w-2 bg-rose-500 rounded-full border-2 border-white" />
             </TouchableOpacity>
           </View>
         </View>
 
-        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="pb-5">
-            {/* MAIN REVENUE CARD - RADIANT STYLE */}
-            <View className="px-4 mt-2">
-              <LinearGradient
-                colors={["#F83758", "#FF6B8B"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                  borderRadius: 24,
-                  padding: 20,
-                }}
-              >
-                <View className="flex-row justify-between items-start">
-                  <View>
-                    <Text className="text-surface-light/80 text-xs font-semibold uppercase tracking-[2px]">
-                      Portfolio Value
-                    </Text>
-                    <Text className="text-surface-light text-4xl font-semibold tracking-tighter mt-1">
-                      $00.00
-                    </Text>
-                    <Text className="text-surface-light/80 text-xs font-medium mt-1">
-                      Updated just now
-                    </Text>
-                  </View>
-                  <View className="bg-white/15 h-12 w-12 rounded-2xl items-center justify-center">
-                    <Ionicons name="stats-chart" size={22} color="white" />
-                  </View>
-                </View>
+        <ScrollView
+          className="flex-1"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 40 }}
+        >
+          {/* TOP METRICS GRID */}
+          <View className="px-5 mt-2 flex-row flex-wrap justify-between">
+            <MetricCard
+              title="Total Sales"
+              value="$24,580.00"
+              subValue="+$1,200 today"
+              icon="cash-outline"
+              color="#6366f1"
+              trend={12.5}
+            />
+            <MetricCard
+              title="Orders"
+              value="158"
+              subValue="12 pending"
+              icon="cart-outline"
+              color="#f59e0b"
+            />
+            <MetricCard
+              title="Inventory"
+              value="42 Items"
+              subValue="5 low stock"
+              icon="cube-outline"
+              color="#10b981"
+            />
+            <MetricCard
+              title="Customers"
+              value="1,240"
+              subValue="+18 this week"
+              icon="people-outline"
+              color="#ec4899"
+              trend={4.2}
+            />
+          </View>
 
-                <View className="mt-4 flex-row items-center justify-between">
-                  <View className="flex-row items-center bg-white/10 px-4 py-2 rounded-xl">
-                    <Ionicons name="trending-up" size={16} color="green" />
-                    <Text className="text-surface-light text-xs font-semibold ml-2">
-                      +12.5% increase
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => router.push("/(stack)/analysis")}
-                    className="flex-row items-center bg-white/15 px-4 py-2 rounded-xl"
-                  >
-                    <Text className="text-surface-light text-xs font-semibold mr-1">
-                      ANALYSIS
-                    </Text>
-                    <Ionicons name="chevron-forward" size={16} color="white" />
-                  </TouchableOpacity>
-                </View>
-              </LinearGradient>
-              {/* Subtle colored glow instead of gray shadow */}
-              {/* <View className="h-4 bg-[#F83758]/10 mx-10 rounded-b-full scale-x-100" /> */}
+          {/* QUICK ACTIONS */}
+          <View className="px-5 mt-6">
+            <Text className="text-slate-900 text-lg font-black mb-5">
+              Quick Actions
+            </Text>
+            <View className="flex-row flex-wrap justify-between">
+              <QuickAction
+                label="Add Product"
+                icon="add-circle-outline"
+                color="#F83758"
+                bg="#FEF2F4"
+                onPress={() =>
+                  router.push("/(tabs)/products/add-product" as any)
+                }
+              />
+              <QuickAction
+                label="Categories"
+                icon="grid-outline"
+                color="#6366f1"
+                bg="#EEF2FF"
+                onPress={() => {}}
+              />
+              <QuickAction
+                label="Refunds"
+                icon="refresh-outline"
+                color="#ec4899"
+                bg="#FDF2F8"
+                onPress={() => {}}
+              />
+              <QuickAction
+                label="Coupons"
+                icon="ticket-outline"
+                color="#f59e0b"
+                bg="#FFFBEB"
+                onPress={() => {}}
+              />
+              <QuickAction
+                label="Reports"
+                icon="bar-chart-outline"
+                color="#10b981"
+                bg="#ECFDF5"
+                onPress={() => {}}
+              />
+              <QuickAction
+                label="Add Staff"
+                icon="person-add-outline"
+                color="#64748b"
+                bg="#F8FAFC"
+                onPress={() => {}}
+              />
             </View>
+          </View>
 
-            {/* LIVE METRICS - BORDERLESS TILE DESIGN */}
-            <View className="mt-5 px-4">
-              <View className="flex-row justify-between items-center">
+          {/* SALES TREND MINI DASHBOARD */}
+          <View className="px-5 mt-2">
+            <View className="bg-slate-900 p-5 rounded-[32px] overflow-hidden">
+              <View className="flex-row justify-between items-center mb-6">
                 <View>
-                  <Text className="text-slate-800 text-xl font-semibold tracking-tight">
-                    Live Inventory
+                  <Text className="text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                    Revenue trend
                   </Text>
-                  <View className="flex-row items-center">
-                    <View className="h-1.5 w-1.5 bg-emerald-500 rounded-full mr-2" />
-                    <Text className="text-slate-400 text-xs font-medium">
-                      Real-time store updates
-                    </Text>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  onPress={() => router.push("/(tabs)/products")}
-                  className="py-2 px-4 bg-slate-100 rounded-xl"
-                >
-                  <Text className="text-[#F83758] text-xs font-semibold uppercase tracking-wider">
-                    Manage
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              <View className="flex-row justify-between mt-4">
-                {/* Sale Tile */}
-                <View className="w-[31%] bg-blue-100/40 p-4 justify-center rounded-2xl items-center">
-                  <View className="h-14 w-14 bg-white rounded-2xl items-center justify-center mb-4">
-                    <Ionicons name="flash" size={24} color="#3b82f6" />
-                  </View>
-                  <Text className="text-blue-900/40 text-[9px] font-semibold uppercase tracking-[2px]">
-                    Sales
-                  </Text>
-                  <Text className="text-blue-900 text-2xl font-semibold">
-                    145
+                  <Text className="text-white text-xl font-black mt-1">
+                    $12,450.00
                   </Text>
                 </View>
-
-                {/* Pending Tile */}
-                <View className="w-[31%] bg-yellow-100/40 p-4 justify-center  rounded-2xl items-center">
-                  <View className="h-14 w-14 bg-white rounded-2xl items-center justify-center mb-4">
-                    <Ionicons name="time" size={24} color="#f59e0b" />
-                  </View>
-                  <Text className="text-amber-900/40 text-[9px] font-semibold uppercase tracking-[2px]">
-                    Pending
-                  </Text>
-                  <Text className="text-amber-900 text-2xl font-semibold">
-                    12
-                  </Text>
-                </View>
-
-                {/* Stock Tile */}
-                <View className="w-[31%] bg-emerald-100/40 p-4 justify-center  rounded-2xl items-center">
-                  <View className="h-14 w-14 bg-white rounded-2xl items-center justify-center mb-4">
-                    <Ionicons name="cube" size={24} color="#10b981" />
-                  </View>
-                  <Text className="text-emerald-900/40 text-[9px] font-semibold uppercase tracking-[2px]">
-                    Products
-                  </Text>
-                  <Text className="text-emerald-900 text-2xl font-semibold">
-                    482
+                <View className="bg-white/10 px-3 py-1.5 rounded-full">
+                  <Text className="text-white text-[10px] font-black uppercase">
+                    This Month
                   </Text>
                 </View>
               </View>
-            </View>
 
-            {/* QUICK ACTIONS - RADIANT TILES */}
-            <View className="px-4 mt-4 pb-2">
-              <View className="flex-row items-center mb-2">
-                <Text className="text-slate-800 text-xl font-semibold tracking-tight">
-                  Quick Actions
-                </Text>
-                <View className="ml-2 h-[1px] flex-1 bg-slate-200" />
-              </View>
-              <View className="flex-row justify-between">
-                {[
-                  {
-                    label: "Add",
-                    icon: "add",
-                    color: "#F83758",
-                    bg: "#FEF2F4",
-                    screen: "/(tabs)/products/add-product",
-                  },
-                  {
-                    label: "Orders",
-                    icon: "reader",
-                    color: "#6366f1",
-                    bg: "#EEF2FF",
-
-                    screen: "/(tabs)/orders",
-                  },
-                  {
-                    label: "Users",
-                    icon: "people",
-                    color: "#10b981",
-                    bg: "#ECFDF5",
-                    screen: "/(tabs)/users",
-                  },
-                  {
-                    label: "Help",
-                    icon: "help-circle",
-                    color: "#64748b",
-                    bg: "#F8FAFC",
-                    screen: "/(stack)/help",
-                  },
-                ].map((item, idx) => (
+              {/* Dummy Chart Representation */}
+              <View className="flex-row items-end justify-between h-20 px-2">
+                {[40, 70, 45, 90, 65, 80, 50, 85].map((h, i) => (
                   <View
-                    key={idx}
-                    className="items-center justify-center w-[22%]"
-                  >
-                    <TouchableOpacity
-                      onPress={() => router.push(item.screen as any)}
-                      style={{ backgroundColor: item.bg }}
-                      className="h-16 w-16 rounded-2xl items-center justify-center mb-2"
-                    >
-                      <Ionicons
-                        name={item.icon as any}
-                        size={28}
-                        color={item.color}
-                      />
-                    </TouchableOpacity>
-                    <Text className="text-slate-500 text-[10px] font-semibold uppercase tracking-wider text-center">
-                      {item.label}
-                    </Text>
-                  </View>
+                    key={i}
+                    style={{ height: h, width: 20 }}
+                    className={`rounded-t-lg ${i === 3 ? "bg-indigo-500" : "bg-white/20"}`}
+                  />
                 ))}
               </View>
             </View>
+          </View>
 
-            {/* RECENT ACTIVITY - REFINED & SMOOTH */}
-            <View className="px-4 mt-2">
-              <View className="flex-row justify-between items-center mb-2">
-                <Text className="text-slate-700 text-lg font-semibold">
-                  Recent Activity
+          {/* INVENTORY ALERTS */}
+          <View className="px-5 mt-8">
+            <View className="flex-row justify-between items-center mb-4">
+              <Text className="text-slate-900 text-lg font-black">
+                Stock Alerts
+              </Text>
+              <TouchableOpacity>
+                <Text className="text-indigo-600 text-xs font-bold uppercase">
+                  View All
                 </Text>
-                <TouchableOpacity onPress={() => router.push("/(tabs)/orders")}>
-                  <Text className="text-slate-400 text-xs underline font-medium">
-                    View History
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
+            </View>
+            <InventoryAlert
+              name="Nebula Runner Sneakers"
+              stock={0}
+              type="out"
+            />
+            <InventoryAlert name="Quantum Noise Headset" stock={4} type="low" />
+            <InventoryAlert name="Neo Minimal Desk Lamp" stock={7} type="low" />
+          </View>
 
-              <View className="bg-slate-50 rounded-2xl p-3">
-                {[
-                  {
-                    name: "Sarah Johnson",
-                    id: "0021",
-                    amount: "+ $149",
-                    status: "Done",
-                    time: "2 min ago",
-                    color: "#10b981",
-                    bg: "#ECFDF5",
-                  },
-                  {
-                    name: "Mike Chen",
-                    id: "0020",
-                    amount: "+ $82",
-                    status: "Pending",
-                    time: "1 hour ago",
-                    color: "#f59e0b",
-                    bg: "#FFFBEB",
-                  },
-                  {
-                    name: "Elena Rodriguez",
-                    id: "0019",
-                    amount: "+ $210",
-                    status: "Done",
-                    time: "3 hours ago",
-                    color: "#10b981",
-                    bg: "#ECFDF5",
-                  },
-                ].map((order, idx) => (
-                  <View
-                    key={idx}
-                    className={`flex-row items-center ${idx === 0 ? "" : "mt-3"}`}
-                  >
+          {/* RECENT ORDERS */}
+          <View className="px-5 mt-8">
+            <View className="flex-row justify-between items-center mb-4">
+              <Text className="text-slate-900 text-lg font-black">
+                Recent Orders
+              </Text>
+              <TouchableOpacity
+                onPress={() => router.push("/(tabs)/orders" as any)}
+              >
+                <Text className="text-indigo-600 text-xs font-bold uppercase underline">
+                  View All
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View className="bg-slate-50 border border-slate-100 rounded-[32px] p-2">
+              {[
+                {
+                  id: "ORD-9921",
+                  user: "Sarah J.",
+                  amount: "$149.00",
+                  status: "Shipped",
+                  color: "#6366f1",
+                },
+                {
+                  id: "ORD-8812",
+                  user: "Mike Chen",
+                  amount: "$82.50",
+                  status: "Pending",
+                  color: "#f59e0b",
+                },
+                {
+                  id: "ORD-7754",
+                  user: "Elena R.",
+                  amount: "$210.00",
+                  status: "Delivered",
+                  color: "#10b981",
+                },
+              ].map((order, i) => (
+                <View
+                  key={order.id}
+                  className={`flex-row items-center justify-between p-4 ${i !== 2 ? "border-b border-slate-200/50" : ""}`}
+                >
+                  <View className="flex-row items-center">
+                    <View className="h-10 w-10 bg-white rounded-xl items-center justify-center border border-slate-100 shadow-sm mr-4">
+                      <Text className="text-slate-900 font-black text-xs">
+                        {order.user[0]}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text className="text-slate-900 font-bold text-sm">
+                        {order.user}
+                      </Text>
+                      <Text className="text-slate-400 text-[10px] font-bold">
+                        #{order.id}
+                      </Text>
+                    </View>
+                  </View>
+                  <View className="items-end">
+                    <Text className="text-slate-900 font-black text-sm">
+                      {order.amount}
+                    </Text>
                     <View
-                      style={{ backgroundColor: order.bg }}
-                      className="h-12 w-12 rounded-xl items-center justify-center"
+                      style={{ backgroundColor: `${order.color}15` }}
+                      className="px-2 py-0.5 rounded-lg mt-1"
                     >
                       <Text
                         style={{ color: order.color }}
-                        className="font-semibold text-base"
+                        className="text-[9px] font-black uppercase"
                       >
-                        {order.name[0]}
+                        {order.status}
                       </Text>
-                    </View>
-                    <View className="ml-4 flex-1">
-                      <Text className="text-slate-700 font-medium text-base">
-                        {order.name}
-                      </Text>
-                      <Text className="text-slate-400 text-xs mt-0.5">
-                        Order #{order.id} • {order.time}
-                      </Text>
-                    </View>
-                    <View className="items-end">
-                      <Text className="text-slate-700 font-semibold text-base">
-                        {order.amount}
-                      </Text>
-                      <View
-                        style={{
-                          backgroundColor:
-                            order.status === "Done" ? "#ECFDF5" : "#FFFBEB",
-                        }}
-                        className="px-2 py-1 rounded-xl mt-1"
-                      >
-                        <Text
-                          style={{
-                            color:
-                              order.status === "Done"
-                                ? "#10b981"
-                                : "#f59e0b",
-                          }}
-                          className="text-[10px] font-semibold uppercase tracking-wider"
-                        >
-                          {order.status}
-                        </Text>
-                      </View>
                     </View>
                   </View>
-                ))}
-              </View>
+                </View>
+              ))}
             </View>
+          </View>
+
+          {/* QUICK LINKS / FOOTER */}
+          <View className="px-5 mt-10 flex-row justify-between">
+            <TouchableOpacity className="flex-row items-center bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100 flex-1 mr-3">
+              <Ionicons name="settings-outline" size={18} color="#64748b" />
+              <Text className="ml-2 text-slate-600 font-bold text-xs uppercase">
+                Settings
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="flex-row items-center bg-rose-50 px-5 py-3 rounded-2xl border border-rose-100 flex-1">
+              <Ionicons name="log-out-outline" size={18} color="#F83758" />
+              <Text className="ml-2 text-rose-600 font-bold text-xs uppercase">
+                Logout
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
