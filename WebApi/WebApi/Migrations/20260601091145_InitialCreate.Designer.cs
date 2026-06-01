@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(NativeDbContext))]
-    partial class NativeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260601091145_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +283,7 @@ namespace WebApi.Migrations
                             IsActive = true,
                             Name = "Electronics",
                             Slug = "electronics",
-                            UpdatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2026, 6, 1, 9, 11, 44, 966, DateTimeKind.Utc).AddTicks(3709)
                         },
                         new
                         {
@@ -290,7 +293,7 @@ namespace WebApi.Migrations
                             IsActive = true,
                             Name = "Clothing",
                             Slug = "clothing",
-                            UpdatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2026, 6, 1, 9, 11, 44, 966, DateTimeKind.Utc).AddTicks(5008)
                         });
                 });
 
@@ -585,7 +588,7 @@ namespace WebApi.Migrations
                             FirstName = "Admin",
                             IsBlocked = false,
                             LastName = "User",
-                            Password = "AAECAwQFBgcICQoLDA0ODw==;QYruImrEIfbgvKJd1TVFPj1jqr/M4wSkf2ltGPGot88=",
+                            Password = "HNZNXlK+7mdBsmVxdWsaUw==;dkBCt4AOAH19sr1NPcWnE6f0wYp3D0sB2Ol3Dc67jPo=",
                             Role = "Admin",
                             UpdatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         });

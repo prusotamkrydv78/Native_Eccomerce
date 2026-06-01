@@ -7,33 +7,32 @@ public class Product
     public Guid Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
-
     public string Description { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
 
-    public int Price { get; set; }
+    public decimal BasePrice { get; set; }
+    public decimal? DiscountPrice { get; set; }
 
-    public string? Image { get; set; }
+    public List<string> Images { get; set; } = new List<string>();
 
     public string? Brand { get; set; }
 
-    public int TotalStock { get; set; }
+    public int Stock { get; set; }
 
-    public string? Seller { get; set; }
+    public Guid CategoryId { get; set; }
+    public Category Category { get; set; }
 
-    public bool IsPublished { get; set; }
+    public List<string> Tags { get; set; } = new List<string>();
+    public string? SpecificationsJson { get; set; }
+    public string? VariantsJson { get; set; }
 
     public double Rating { get; set; }
+    public int ReviewCount { get; set; }
 
-    public string? Specifications { get; set; }
+    public List<Review> Reviews { get; set; } = new List<Review>();
 
-    public Guid UserId { get; set; }
+    public bool IsPublished { get; set; } = true;
 
-    public Users User { get; set; }
-
-    public ICollection<Review> Reviews { get; set; }
-        = new List<Review>();
-
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

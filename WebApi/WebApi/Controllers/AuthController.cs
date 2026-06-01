@@ -1,109 +1,79 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Data;
-using WebApi.Models.Domain;
+using System.Security.Claims;
 using WebApi.Models.DTOs;
-using Microsoft.EntityFrameworkCore;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-     public class AuthController : ControllerBase
-
+    public class AuthController : ControllerBase
     {
-        private readonly NativeDbContext nativeDbContext;
+        private readonly IAuthService _authService;
 
-        public AuthController(NativeDbContext nativeDbContext)
+        public AuthController(IAuthService authService)
         {
-            this.nativeDbContext = nativeDbContext;
+            _authService = authService;
         }
 
-
-
-
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterDto registerDto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             try
             {
-
-            var isUserExist = await nativeDbContext.Users
-    .AnyAsync(u => u.Email == registerDto.Email);
-
-            if (isUserExist)
-                return Conflict(new { message = "User already exists" });
-
-            var newUser = new Users
-            {
-                FullName = registerDto.FullName,
-                Email = registerDto.Email,
-                Password = PasswordHasherUtil.HashPassword(registerDto.Password)
-            };
-
-            nativeDbContext.Users.Add(newUser);
-            await nativeDbContext.SaveChangesAsync();
-
-            return Ok(new
-            {
-                message = "User registered successfully",
-                data = new
-                {
-                    newUser.Id,
-                    newUser.FullName,
-                    newUser.Email
-                }
-            });
+                var response = await _authService.RegisterAsync(registerDto);
+                return Ok(new { message = "User registered successfully", data = response });
             }
-            catch (DbUpdateException ex)
+            catch (Exception ex)
             {
-                var message = ex.InnerException?.Message;
-                return BadRequest(message);
+                return BadRequest(new { message = ex.Message });
             }
-
         }
-
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var isUserExist = await nativeDbContext.Users.FirstOrDefaultAsync(x => x.Email == loginDto.Email);
-            if (isUserExist == null)
+            try
             {
-                return Unauthorized(new { message = "Invalid email or password" });
+                var response = await _authService.LoginAsync(loginDto);
+                return Ok(new { message = "Login successful", data = response });
             }
-
-            var isPasswordCorrect = PasswordHasherUtil.VerifyPassword(
-                isUserExist.Password,
-                loginDto.Password
-            );
-
-            if (!isPasswordCorrect)
+            catch (Exception ex)
             {
-                return Unauthorized(new { message = "Invalid email or password" });
+                return Unauthorized(new { message = ex.Message });
             }
-            return Ok(new { message = "Login sucessful", data = new { fullName = isUserExist.FullName, email = isUserExist.Email } });
-
         }
 
-        public static class PasswordHasherUtil
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenDto refreshTokenDto)
         {
-            private static readonly PasswordHasher<object> hasher = new();
-
-            // Hash password
-            public static string HashPassword(string password)
+            try
             {
-                return hasher.HashPassword(null, password);
+                var response = await _authService.RefreshTokenAsync(refreshTokenDto.RefreshToken);
+                return Ok(new { data = response });
             }
-
-            // Verify password
-            public static bool VerifyPassword(string hashedPassword, string password)
+            catch (Exception ex)
             {
-                var result = hasher.VerifyHashedPassword(null, hashedPassword, password);
-                return result == PasswordVerificationResult.Success;
+                return Unauthorized(new { message = ex.Message });
             }
         }
 
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMe()
+        {
+            try
+            {
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
+                var userProfile = await _authService.GetMeAsync(userId);
+                return Ok(new { data = userProfile });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
+
